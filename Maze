@@ -10,6 +10,8 @@ public abstract class Maze extends JPanel{
 	private ArrayList<GridSpace> blockedSpaces;
 	private Time bestTime=new Time(0,0,0);
 	private boolean completed=false;
+	private Player player;
+	private int pixelConstant=10;
 	public Maze(){
 		setPlates();
 		setGrid();
@@ -19,6 +21,13 @@ public abstract class Maze extends JPanel{
 	abstract int gridHeight();
 	abstract String getLevel();
 	abstract void addPlayer(Player toAdd);
+	abstract GridSpace playerStart();
+	public Player getPlayer(){
+		return player;
+	}
+	public void setPlayer(Player newPlayer){
+		player=newPlayer;
+	}
 	public void completeLevel(){
 		completed=true;
 	}
@@ -41,17 +50,33 @@ public abstract class Maze extends JPanel{
 		plates.add(toAdd);
 		
 	}
+	private int numPlates(){
+		return plates.size();
+	}
 	public void paintComponent(Graphics g){
 		super.paintComponent(g);
 		Graphics2D g2=(Graphics2D)g;
+		g2.setColor(Color.black);
 		for (int counter=0;counter<gridWidth();counter++){
-			g2.drawLine(counter*20, 0, counter*20, gridHeight()*20);
+			g2.drawLine(counter*pixelConstant, 0, counter*pixelConstant, gridHeight()*pixelConstant);
 		}
 		for (int counter=0;counter<gridHeight();counter++){
-			g2.drawLine(0,counter*20,gridWidth()*20,counter*20);
+			g2.drawLine(0,counter*pixelConstant,gridWidth()*pixelConstant,counter*pixelConstant);
 		}
-		setSize(gridWidth()*10,gridHeight()*10);
+		setSize(gridWidth()*pixelConstant,gridHeight()*pixelConstant);
 		setBackground(Color.yellow);
+		blockedSpaces=new ArrayList<GridSpace>();
+		for (Plate current : plates){
+			for (int counter=0;counter<current.getSpacesCovered().length;counter++){
+				blockedSpaces.add(current.getSpacesCovered()[counter]);
+			}
+		}
+		for (int counter=0;counter<blockedSpaces.size();counter++){
+			GridSpace current=blockedSpaces.get(counter);
+			g2.drawRect(current.getX()*pixelConstant, current.getY()*pixelConstant, pixelConstant, pixelConstant);
+		}
+		g2.setColor(Color.green);
+		g2.drawOval(player.getOccupiedSpot().getX()*pixelConstant,player.getOccupiedSpot().getY()*pixelConstant,pixelConstant,pixelConstant);
 		
 	}
 	public static void main(String[] args) {

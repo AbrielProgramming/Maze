@@ -1,12 +1,15 @@
 import java.awt.Graphics;
+import java.sql.*;
 import java.awt.event.*;
 import java.util.*;
 import javax.swing.*;
-
+import java.awt.*;
 public abstract class Maze extends JPanel{
 	private Grid grid;
 	private ArrayList<Plate> plates;
 	private ArrayList<GridSpace> blockedSpaces;
+	private Time bestTime=new Time(0,0,0);
+	private boolean completed=false;
 	public Maze(){
 		setPlates();
 		setGrid();
@@ -14,17 +17,42 @@ public abstract class Maze extends JPanel{
 	abstract void setPlates();
 	abstract int gridWidth();
 	abstract int gridHeight();
+	abstract String getLevel();
+	abstract void addPlayer(Player toAdd);
+	public void completeLevel(){
+		completed=true;
+	}
+	public boolean isCompleted(){
+		return completed;
+	}
+	public void setBestTime(Time newTime){
+		bestTime=newTime;
+	}
+	public Time getBestTime(){
+		return bestTime;
+	}
 	private void setGrid(){
 		grid=new Grid(gridWidth(),gridHeight());
 		for (Plate plate : plates){
 			grid.addPlate(plate);
 		}
 	}
+	private void addPlateToGrid(Plate toAdd){
+		plates.add(toAdd);
+		
+	}
 	public void paintComponent(Graphics g){
 		super.paintComponent(g);
+		Graphics2D g2=(Graphics2D)g;
 		for (int counter=0;counter<gridWidth();counter++){
-			
+			g2.drawLine(counter*20, 0, counter*20, gridHeight()*20);
 		}
+		for (int counter=0;counter<gridHeight();counter++){
+			g2.drawLine(0,counter*20,gridWidth()*20,counter*20);
+		}
+		setSize(gridWidth()*10,gridHeight()*10);
+		setBackground(Color.yellow);
+		
 	}
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub

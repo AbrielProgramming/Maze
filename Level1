@@ -1,8 +1,26 @@
-public class Level1 extends Maze{
+import java.awt.*;
 
-	/**
-	 * @param args
-	 */
+
+public class Level1 extends Maze{
+	
+	public void setPlates(){
+		
+	}
+	public int gridWidth(){
+		return 10;
+	}
+	public int gridHeight(){
+		return 10;
+	}
+	public String getLevel(){
+		return "Level 1";
+	}
+	public void addPlayer(Player toAdd){
+		setPlayer(toAdd);
+	}
+	public GridSpace playerStart(){
+		return new GridSpace(0,0);
+	}
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 

@@ -5,7 +5,7 @@ public class GridSpace {
 private int x;
 private int y;
 private boolean occupied;
-//private Object occupiedBy;
+private Object occupiedBy;
 private boolean allowMovement;
 	public GridSpace(int x, int y) {
 		this.x=x;
@@ -18,14 +18,19 @@ private boolean allowMovement;
 		this.y=y;
 		occupied=occupy;
 		allowMovement=movement;
+//		this.occupiedBy=occupiedBy;
 	}
 	
 	public boolean getAllowedMovement() {
 		return allowMovement;
 	}
-	//public Object getOccupiedBy() {
-	//	return occupiedBy;
-	//}
+//	public Object getOccupiedBy() {
+//		return occupiedBy;
+//	}
+//	public void editOccupy(boolean occupy) {
+//		occupied=occupy;
+//	}
+
 	
 	public int getX() {
 		return x;
@@ -39,11 +44,15 @@ private boolean allowMovement;
 		return occupied;
 	}
 
-	public void editGridSpace(GridSpace space, int x, int y, boolean occupy, boolean movement) {
-		space.x=x;
-		space.y=y;
-		space.occupied=occupy;
-		space.allowMovement=movement;
+	public void editMovement(boolean movt) {
+		allowMovement=movt;
+	}
+	public void editGridSpace(int x, int y, boolean occupy, boolean movement) {
+		this.x=x;
+		this.y=y;
+		occupied=occupy;
+		allowMovement=movement;
+		/*this.occupiedBy=occupiedBy;*/
 	}
 
 	

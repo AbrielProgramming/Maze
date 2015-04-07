@@ -46,11 +46,34 @@ private ArrayList<Plate> plates;
 		}
 		for (int num: works) {
 			if (num==0) {
+				System.out.println("can't add");
 				return;
 			}
 		}
-
 		plate.setGrid();
+		
+	}
+	
+	public void addMonster(Monster mon) {
+		ArrayList<GridSpace> allowed=getAllowMovementSpaces();
+		for (GridSpace space: allowed) {
+			if (space==mon.getOccupiedSpot()) {
+				mon.getOccupiedSpot().editMovement(false);
+				return;
+			}
+		}
+		System.out.println("can't add");
+	}
+	
+	public void addPlayer(Player ply) {
+		ArrayList<GridSpace> allowed=getAllowMovementSpaces();
+		for (GridSpace space: allowed) {
+			if (space==ply.getOccupiedSpot()) {
+				ply.getOccupiedSpot().editMovement(false);
+				return;
+			}
+		}
+		System.out.println("can't add");
 	}
 	
 	public GridSpace getGridSpace(int i, int j) {

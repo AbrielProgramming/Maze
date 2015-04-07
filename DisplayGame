@@ -1,18 +1,63 @@
 import java.awt.event.*;
+import java.awt.*;
 import javax.swing.*;
 public class DisplayGame {
 
 	JFrame frame;
 	JPanel panel;
+	JPanel bestTimes;
+	JPanel options;
 	Timer gameTimer;
 	Maze currentMaze;
+	Maze[] allMazes={new Level1(),new Level2(),new Level3(),new Bonus()};
+	JButton pause;
+	JComboBox level;
+	JLabel showTime;
+	Player player;
+	TrackTime timeTracker;
 	public DisplayGame(){
 		frame=new JFrame();
 		panel=new JPanel();
+		currentMaze=allMazes[0];
+		panel.setLayout(new GridLayout(2,2,10,10));
+		options=new JPanel();
+		options.setLayout(new BoxLayout(options,BoxLayout.Y_AXIS));
+		pause=new JButton("pausebutton.png");
+		pause.setActionCommand("pause");
+		String[] levels={"Level 1","Level 2","Level 3"};
+		level=new JComboBox(levels);
+		level.setSelectedIndex(0);
+		level.setAlignmentX(JFrame.LEFT_ALIGNMENT);
+		timeTracker=new TrackTime();
+		showTime=new JLabel(""+timeTracker.getTime());
+		options.add(showTime);
+		options.add(pause);
+		options.add(level);
+		
+		
+		bestTimes=new JPanel();
+		bestTimes.setLayout(new BoxLayout(bestTimes,BoxLayout.Y_AXIS));
+		bestTimes.add(new JLabel("Best Times:"));
+		setBestTimes();
+		options.add(bestTimes);
+		
 	}
-	
+	private void setBestTimes(){
+		String currentLevel=currentMaze.getLevel();
+		for (int counter=0;counter<allMazes.length;counter++){
+			bestTimes.add(new JLabel(allMazes[counter].getLevel() + allMazes[counter].getBestTime()));
+		}
+	}
+	public static void runGUI(){
+		JFrame.setDefaultLookAndFeelDecorated(true);
+		DisplayGame test=new DisplayGame();
+	}
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
+		javax.swing.SwingUtilities.invokeLater(new Runnable() {
+			public void run(){
+				runGUI();
+			}
+		});
 
 	}
 

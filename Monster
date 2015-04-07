@@ -1,0 +1,27 @@
+
+public class Monster {
+private GridSpace occupied;
+private char[] movement; //r, l, u, p
+private int speed;
+
+	public Monster(GridSpace start, char[] move, int spd) {
+		occupied=start;
+		movement=move;
+		speed=spd;
+	}
+
+	public void changeOccupiedSpot(GridSpace space) {
+		occupied=space;
+	}
+	
+	public GridSpace getOccupiedSpot() {
+		return occupied;
+	}
+	
+	public void move() {
+		//swing timer
+	}
+	
+	
+
+}

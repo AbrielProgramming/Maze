@@ -10,6 +10,7 @@ private ArrayList<Plate> plates;
 		this.width=width;
 		this.height=height;
 		plates=new ArrayList();
+		coordinates=new GridSpace[width][height];
 		createSpaces();
 	}
 

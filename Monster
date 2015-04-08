@@ -1,27 +1,68 @@
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 
 public class Monster {
-private GridSpace occupied;
-private char[] movement; //r, l, u, p
-private int speed;
+	private GridSpace occupied;
+	private char[] movement; //r, l, u, d for movement and must specify both forward and return movement
+	private int speed;	//speed in is seconds
+	private int movementStep;
+	private Grid grid;
+	private boolean movementDirection;
 
-	public Monster(GridSpace start, char[] move, int spd) {
+	public Monster(Grid grid, GridSpace start, char[] move, int spd) {
 		occupied=start;
 		movement=move;
 		speed=spd;
+		movementStep=0;
+		this.grid=grid;
+		movementDirection=true;
 	}
 
 	public void changeOccupiedSpot(GridSpace space) {
 		occupied=space;
 	}
-	
+
 	public GridSpace getOccupiedSpot() {
 		return occupied;
 	}
-	
-	public void move() {
-		//swing timer
+
+	public char[] getMovementArray() {
+		return movement;
 	}
 	
-	
+	public void move() {
+		if (movement!=null){
+			char dir=movement[movementStep];
+			if (dir=='r') {
+				occupied=grid.getGridSpace(occupied.getX()+1, occupied.getY());
+				occupied.editMovement(false);
+				
+			} else if (dir=='l') {
+				occupied=grid.getGridSpace(occupied.getX()-1, occupied.getY());
+				occupied.editMovement(false);
+			} else if (dir=='u') {
+				occupied=grid.getGridSpace(occupied.getX(), occupied.getY()+1);
+				occupied.editMovement(false);
+			} else if (dir=='d') {
+				occupied=grid.getGridSpace(occupied.getX(), occupied.getY()-1);
+				occupied.editMovement(false);
+			}
+			if (movementStep==movement.length-1) {
+				movementDirection=false;
+			} else if (movementStep==0) {
+				movementDirection=true;
+			}
+			if (movementDirection) {
+				movementStep++;
+			} else {
+				movementStep--;
+			}
+		}
+		
+
+	}
+
+
 
 }

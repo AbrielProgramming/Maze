@@ -5,15 +5,15 @@ import java.awt.event.ActionListener;
 public class Monster {
 	private GridSpace occupied;
 	private char[] movement; //r, l, u, d for movement and must specify both forward and return movement
-	private int speed;	//speed in is seconds
+	//private int speed;	//speed in is seconds
 	private int movementStep;
 	private Grid grid;
 	private boolean movementDirection;
 
-	public Monster(Grid grid, GridSpace start, char[] move, int spd) {
+	public Monster(Grid grid, GridSpace start, char[] move) {
 		occupied=start;
 		movement=move;
-		speed=spd;
+		//speed=spd;
 		movementStep=0;
 		this.grid=grid;
 		movementDirection=true;

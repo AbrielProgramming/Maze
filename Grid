@@ -61,7 +61,7 @@ private ArrayList<Plate> plates;
 		ArrayList<GridSpace> allowed=getAllowMovementSpaces();
 		for (GridSpace space: allowed) {
 			if (space==mon.getOccupiedSpot()) {
-				mon.getOccupiedSpot().editMovement(false);
+				mon.setGrid();
 				return;
 			}
 		}
@@ -74,7 +74,7 @@ private ArrayList<Plate> plates;
 		ArrayList<GridSpace> allowed=getAllowMovementSpaces();
 		for (GridSpace space: allowed) {
 			if (space==ply.getOccupiedSpot()) {
-				ply.getOccupiedSpot().editMovement(false);
+				ply.setGrid();
 				return;
 			}
 		}

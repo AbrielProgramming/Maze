@@ -29,7 +29,6 @@ private String newestTime;
 	}
 	
 	public void setGrid() {
-		getOccupiedSpot().editMovement(false);
 		getOccupiedSpot().editOccupiedBy(this);
 	}
 	

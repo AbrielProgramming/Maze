@@ -27,6 +27,12 @@ private String newestTime;
 		}
 		
 	}
+	
+	public void setGrid() {
+		getOccupiedSpot().editMovement(false);
+		getOccupiedSpot().editOccupiedBy(this);
+	}
+	
 	public void changeOccupiedSpot(GridSpace space) {
 		occupied=space;
 	} 

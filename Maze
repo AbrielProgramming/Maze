@@ -6,13 +6,14 @@ import javax.swing.*;
 import java.awt.*;
 public abstract class Maze extends JPanel{
 	private Grid grid;
-	private ArrayList<Plate> plates;
+	private ArrayList<Plate> plates=new ArrayList();
 	private ArrayList<GridSpace> blockedSpaces;
 	private Time bestTime=new Time(0,0,0);
 	private boolean completed=false;
 	private Player player;
-	private int pixelConstant=10;
+	private int pixelConstant=20;
 	public Maze(){
+		setPreferredSize(new Dimension(300,300));
 		setPlates();
 		setGrid();
 	}
@@ -48,10 +49,28 @@ public abstract class Maze extends JPanel{
 	}
 	private void addPlateToGrid(Plate toAdd){
 		plates.add(toAdd);
-		
+
 	}
 	private int numPlates(){
 		return plates.size();
+	}
+	public void movePlayer(String direction){
+		GridSpace newSpace;
+		GridSpace currentSpace=player.getOccupiedSpot();
+		if (direction.equals("Left")){
+			newSpace=grid.getGridSpace(currentSpace.getX()-1, currentSpace.getY());
+		}else if (direction.equals("Right")){
+			newSpace=grid.getGridSpace(currentSpace.getX()+1, currentSpace.getY());
+		}else if (direction.equals("Up")){
+			newSpace=grid.getGridSpace(currentSpace.getX(), currentSpace.getY()-1);
+		}else{
+			newSpace=grid.getGridSpace(currentSpace.getX(), currentSpace.getY()+1);
+		}
+		if (!newSpace.getOccupied()){
+			player.changeOccupiedSpot(newSpace);
+			repaint();
+		}
+		
 	}
 	public void paintComponent(Graphics g){
 		super.paintComponent(g);
@@ -66,18 +85,21 @@ public abstract class Maze extends JPanel{
 		setSize(gridWidth()*pixelConstant,gridHeight()*pixelConstant);
 		setBackground(Color.yellow);
 		blockedSpaces=new ArrayList<GridSpace>();
-		for (Plate current : plates){
-			for (int counter=0;counter<current.getSpacesCovered().length;counter++){
-				blockedSpaces.add(current.getSpacesCovered()[counter]);
+		if (plates.size()>0){
+			for (Plate current : plates){
+				for (int counter=0;counter<current.getSpacesCovered().length;counter++){
+					blockedSpaces.add(current.getSpacesCovered()[counter]);
+				}
+			}
+			for (int counter=0;counter<blockedSpaces.size();counter++){
+				GridSpace current=blockedSpaces.get(counter);
+				g2.drawRect(current.getX()*pixelConstant, current.getY()*pixelConstant, pixelConstant, pixelConstant);
 			}
 		}
-		for (int counter=0;counter<blockedSpaces.size();counter++){
-			GridSpace current=blockedSpaces.get(counter);
-			g2.drawRect(current.getX()*pixelConstant, current.getY()*pixelConstant, pixelConstant, pixelConstant);
-		}
-		g2.setColor(Color.green);
-		g2.drawOval(player.getOccupiedSpot().getX()*pixelConstant,player.getOccupiedSpot().getY()*pixelConstant,pixelConstant,pixelConstant);
+		g2.setColor(Color.cyan);
 		
+		g2.fillOval(player.getOccupiedSpot().getX()*pixelConstant,player.getOccupiedSpot().getY()*pixelConstant,pixelConstant,pixelConstant);
+
 	}
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub

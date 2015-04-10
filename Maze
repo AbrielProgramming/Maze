@@ -55,7 +55,7 @@ public abstract class Maze extends JPanel{
 		return plates.size();
 	}
 	public void movePlayer(String direction){
-		GridSpace newSpace;
+		GridSpace newSpace=null;
 		GridSpace currentSpace=player.getOccupiedSpot();
 		if (direction.equals("Left")){
 			newSpace=grid.getGridSpace(currentSpace.getX()-1, currentSpace.getY());
@@ -63,10 +63,10 @@ public abstract class Maze extends JPanel{
 			newSpace=grid.getGridSpace(currentSpace.getX()+1, currentSpace.getY());
 		}else if (direction.equals("Up")){
 			newSpace=grid.getGridSpace(currentSpace.getX(), currentSpace.getY()-1);
-		}else{
+		}else if (direction.equals("Down")){
 			newSpace=grid.getGridSpace(currentSpace.getX(), currentSpace.getY()+1);
 		}
-		if (!newSpace.getOccupied()){
+		if (newSpace!=null&&!newSpace.getOccupied()){
 			player.changeOccupiedSpot(newSpace);
 			repaint();
 		}

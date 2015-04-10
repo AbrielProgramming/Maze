@@ -18,15 +18,15 @@ private boolean allowMovement;
 		this.y=y;
 		occupied=occupy;
 		allowMovement=movement;
-//		this.occupiedBy=occupiedBy;
+		this.occupiedBy=occupiedBy;
 	}
 	
 	public boolean getAllowedMovement() {
 		return allowMovement;
 	}
-//	public Object getOccupiedBy() {
-//		return occupiedBy;
-//	}
+	public Object getOccupiedBy() {
+		return occupiedBy;
+	}
 //	public void editOccupy(boolean occupy) {
 //		occupied=occupy;
 //	}
@@ -41,9 +41,15 @@ private boolean allowMovement;
 	}
 	
 	public boolean getOccupied() {
-		return occupied;
+		if (getOccupiedBy()!=null) {
+			return true;
+		}
+		return false;
 	}
 
+	public void editOccupiedBy(Object obj) {
+		occupiedBy=obj;
+	}
 	public void editMovement(boolean movt) {
 		allowMovement=movt;
 	}

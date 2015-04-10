@@ -1,1 +1,194 @@
 
+
+public class SlidingPlate extends Plate {
+	private int maxExtension;
+	private int movementStep;
+	private boolean movementDirection; //if the plate is sliding forward or backwards
+	private boolean moveDir; //whether plate slides horizontally or vertically
+	public SlidingPlate(Grid grid, int xStart, int yStart, int length, String orientation, int maxExtension, String moveDir) {
+		super(grid, xStart, yStart, length, orientation);
+		this.maxExtension=maxExtension;
+		movementStep=0;
+		if (moveDir.equals("horizontal")) {
+			this.moveDir=false;
+		} else if (moveDir.equals("vertical")) {
+			this.moveDir=true;
+		}
+
+	}
+
+	public GridSpace[] getSpacesCovered() {
+		return super.getSpacesCovered();
+	}
+	public void setGrid() {
+		//		if (super.orientation()=="vertical") {
+		//			for (int i=0; i<super.length(); i++) {
+		//				GridSpace space=super.getGrid().getGridSpace(super.xStart(), super.yStart()+i);
+		//				space.editMovement(false);
+		//			}
+		//
+		//		} else if (super.orientation()=="horizontal") {
+		//			for (int i=0; i<super.length(); i++) {
+		//				GridSpace space=super.getGrid().getGridSpace(super.xStart()+i, super.yStart());
+		//				space.editMovement(false);
+		//			}
+		//		}
+		super.setGrid();
+	}
+
+	public int length() {
+		return super.length();
+	}
+
+	public String orientation() {
+		return super.orientation();
+	}
+
+	public int xStart() {
+		return super.xStart();
+	}
+
+	public int yStart() {
+		return super.yStart();
+	}
+
+	public void move() {
+		//need to make sure doesnt go over edge
+		//I think this doesnt work when two sliding plates slide out of a spot at the same time 
+		if (movementDirection ) {
+			//moving forwards
+			if (super.orientation().equals("vertical")) {
+				//vertical 
+				if (moveDir) {
+					//vertical movement with vertical orientation
+					GridSpace space=super.getGrid().getGridSpace(super.xStart(), super.yStart()+super.length()+movementStep);
+					space.editMovement(false);
+					space=super.getGrid().getGridSpace(super.xStart(), super.yStart()+movementStep-1);
+					if (space.getOccupiedBy().getClass()==Plate.class) {
+						//do nothing
+					} else {
+						space.editMovement(true);
+					}
+				} else {
+					//horizontal movement with vertical orientation
+					GridSpace space;
+					for (int i=0; i<super.length()-1; i++) {
+						space=super.getGrid().getGridSpace(super.xStart()+movementStep, super.yStart()+i);
+						space.editMovement(false);
+					}
+					for (int i=0; i<super.length()-1; i++) {
+						space=super.getGrid().getGridSpace(super.xStart()+movementStep-1, super.yStart()+i);
+						if (space.getOccupiedBy().getClass()==Plate.class) {
+							//do nothing
+						} else {
+							space.editMovement(true);
+						}
+					}
+
+				}
+			} else if (super.orientation().equals("horizontal")) {
+				//horizontal
+				if (moveDir) {
+					//horizontal movement with horizontal orientation
+					GridSpace space=super.getGrid().getGridSpace(super.xStart()+super.length()+movementStep, super.yStart());
+					space.editMovement(false);
+					space=super.getGrid().getGridSpace(super.xStart()+movementStep-1, super.yStart());
+					if (space.getOccupiedBy().getClass()==Plate.class) {
+						//do nothing
+					} else {
+						space.editMovement(true);
+					}
+				} else {
+					//vertical movement with horizontal orientation
+					GridSpace space;
+					for (int i=0; i<super.length()-1; i++) {
+						space=super.getGrid().getGridSpace(super.xStart()+i, super.yStart()+movementStep);
+						space.editMovement(false);
+					}
+					for (int i=0; i<super.length()-1; i++) {
+						space=super.getGrid().getGridSpace(super.xStart()+i, super.yStart()+movementStep-1);
+						if (space.getOccupiedBy().getClass()==Plate.class) {
+							//do nothing
+						} else {
+							space.editMovement(true);
+						}
+					}
+
+				}
+			}
+
+		} else {
+			//opposite movementDirection, going backwards
+			if (super.orientation().equals("vertical")) {
+				if (moveDir) {
+					GridSpace space=super.getGrid().getGridSpace(super.xStart(), super.yStart()+super.length()+movementStep);
+					space.editMovement(false);
+					space=super.getGrid().getGridSpace(super.xStart(), super.yStart()+movementStep+1);
+					if (space.getOccupiedBy().getClass()==Plate.class) {
+						//do nothing
+					} else {
+						space.editMovement(true);
+					}
+				} else {
+					GridSpace space;
+					for (int i=0; i<super.length()-1; i++) {
+						space=super.getGrid().getGridSpace(super.xStart()+movementStep, super.yStart()+i);
+						space.editMovement(false);
+					}
+					for (int i=0; i<super.length()-1; i++) {
+						space=super.getGrid().getGridSpace(super.xStart()+movementStep+1, super.yStart()+i);
+						if (space.getOccupiedBy().getClass()==Plate.class) {
+							//do nothing
+						} else {
+							space.editMovement(true);
+						}
+					}
+
+				}
+			} else if (super.orientation().equals("horizontal")) {
+				if (moveDir) {
+					GridSpace space=super.getGrid().getGridSpace(super.xStart()+super.length()+movementStep, super.yStart());
+					space.editMovement(false);
+					space=super.getGrid().getGridSpace(super.xStart()+movementStep+1, super.yStart());
+					if (space.getOccupiedBy().getClass()==Plate.class) {
+						//do nothing
+					} else {
+						space.editMovement(true);
+					}
+				} else {
+					GridSpace space;
+					for (int i=0; i<super.length()-1; i++) {
+						space=super.getGrid().getGridSpace(super.xStart()+i, super.yStart()+movementStep);
+						space.editMovement(false);
+					}
+					for (int i=0; i<super.length()-1; i++) {
+						space=super.getGrid().getGridSpace(super.xStart()+i, super.yStart()+movementStep+1);
+						if (space.getOccupiedBy().getClass()==Plate.class) {
+							//do nothing
+						} else {
+							space.editMovement(true);
+						}
+					}
+
+				}
+			}
+		}
+
+
+		if (movementStep==maxExtension-1) {
+			movementDirection=false;
+		} else if (movementStep==0) {
+			movementDirection=true;
+		}
+		if (movementDirection) {
+			movementStep++;
+		} else {
+			movementStep--;
+		}
+
+	}
+
+
+
+
+}

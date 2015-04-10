@@ -1,0 +1,28 @@
+
+public class Bonus extends Maze{
+
+	public void setPlates(){
+
+	}
+	public int gridWidth(){
+		return 10;
+	}
+	public int gridHeight(){
+		return 10;
+	}
+	public String getLevel(){
+		return "Level 1";
+	}
+	public void addPlayer(Player toAdd){
+		setPlayer(toAdd);
+		toAdd.changeOccupiedSpot(new GridSpace(0,0));
+	}
+	public GridSpace playerStart(){
+		return new GridSpace(0,0);
+	}
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+	}
+
+}

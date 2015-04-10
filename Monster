@@ -22,6 +22,11 @@ public class Monster {
 	public void changeOccupiedSpot(GridSpace space) {
 		occupied=space;
 	}
+	
+	public void setGrid() {
+		getOccupiedSpot().editMovement(false);
+		getOccupiedSpot().editOccupiedBy(this);
+	}
 
 	public GridSpace getOccupiedSpot() {
 		return occupied;
@@ -32,6 +37,7 @@ public class Monster {
 	}
 	
 	public void move() {
+		//need to make sure doesnt go over edge
 		if (movement!=null){
 			char dir=movement[movementStep];
 			if (dir=='r') {

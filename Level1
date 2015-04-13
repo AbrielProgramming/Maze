@@ -1,16 +1,24 @@
 import java.awt.*;
+import java.util.ArrayList;
 
 
 public class Level1 extends Maze{
-	
-	public void setPlates(){
-		
+	private ArrayList<Plate> plates;
+	public ArrayList<Plate> getPlates(){
+		return plates;
 	}
+	public void setPlates(){
+		plates=new ArrayList<Plate>();
+		Plate trial=new Plate(super.getGrid(),3,4,3,"vertical");
+		super.getGrid().addPlate(trial);
+		plates.add(trial);
+	}
+
 	public int gridWidth(){
-		return 10;
+		return 20;
 	}
 	public int gridHeight(){
-		return 10;
+		return 20;
 	}
 	public String getLevel(){
 		return "Level 1";
@@ -22,7 +30,7 @@ public class Level1 extends Maze{
 	public GridSpace playerStart(){
 		return new GridSpace(0,0);
 	}
-	
+
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 

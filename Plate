@@ -1,5 +1,5 @@
 
-class Plate {
+public class Plate {
 	private int xStart;
 	private int yStart;
 	private int length;
@@ -38,17 +38,21 @@ class Plate {
 	public void setGrid() {
 		if (orientation=="vertical") {
 			for (int i=0; i<length; i++) {
-				grid.getGridSpace(xStart, yStart+i).editMovement(false);
+				GridSpace space=grid.getGridSpace(xStart, yStart+i);
+				space.editMovement(false);
+				space.editOccupiedBy(this);
 			}
 
 		} else if (orientation=="horizontal") {
 			for (int i=0; i<length; i++) {
-				grid.getGridSpace(xStart+i, yStart).editMovement(false);
+				GridSpace space=grid.getGridSpace(xStart+i, yStart);
+				space.editMovement(false);
+				space.editOccupiedBy(this);
 			}
 		}
 
 	}
-
+	
 	public int length() {
 		return length;
 	}
@@ -63,5 +67,9 @@ class Plate {
 
 	public int yStart() {
 		return yStart;
+	}
+	
+	public Grid getGrid() {
+		return grid;
 	}
 }

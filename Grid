@@ -37,11 +37,11 @@ private ArrayList<Plate> plates;
 		ArrayList<GridSpace> allowed=getAllowMovementSpaces();
 		Plate plate=a;
 		int[] works=new int[a.length()];
-		int i=0;
+		int i=1;
 		for (GridSpace space: allowed) {
 			for (GridSpace otherSpace: a.getSpacesCovered()) {
-				if (space==otherSpace) {
-					works[i]=-i;
+				if (space.getX()==otherSpace.getX()&& space.getY()==otherSpace.getY()) {
+					works[i-1]=-i;
 					i++;
 				}
 			}

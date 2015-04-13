@@ -6,17 +6,17 @@ import javax.swing.*;
 import java.awt.*;
 public abstract class Maze extends JPanel{
 	private Grid grid;
-	private ArrayList<Plate> plates=new ArrayList();
 	private ArrayList<GridSpace> blockedSpaces;
 	private Time bestTime=new Time(0,0,0);
 	private boolean completed=false;
 	private Player player;
-	private int pixelConstant=20;
+	private int pixelConstant=10;
 	public Maze(){
 		setPreferredSize(new Dimension(300,300));
-		setPlates();
 		setGrid();
+		setPlates();
 	}
+	abstract ArrayList<Plate> getPlates();
 	abstract void setPlates();
 	abstract int gridWidth();
 	abstract int gridHeight();
@@ -41,40 +41,39 @@ public abstract class Maze extends JPanel{
 	public Time getBestTime(){
 		return bestTime;
 	}
+	public Grid getGrid(){
+		return grid;
+	}
 	private void setGrid(){
 		grid=new Grid(gridWidth(),gridHeight());
-		for (Plate plate : plates){
-			grid.addPlate(plate);
-		}
+
 	}
 	private void addPlateToGrid(Plate toAdd){
-		plates.add(toAdd);
+		getPlates().add(toAdd);
 
 	}
 	private int numPlates(){
-		return plates.size();
+		return getPlates().size();
 	}
-		public void movePlayer(String direction){
+	public void movePlayer(String direction){
+		
 		GridSpace newSpace=null;
 		GridSpace currentSpace=player.getOccupiedSpot();
 		if (direction.equals("Left")){
-			if (currentSpace.getX()-1>=0)
 			newSpace=grid.getGridSpace(currentSpace.getX()-1, currentSpace.getY());
 		}else if (direction.equals("Right")){
-			if (currentSpace.getX()+1<grid.getSpacesWide())
 			newSpace=grid.getGridSpace(currentSpace.getX()+1, currentSpace.getY());
 		}else if (direction.equals("Up")){
-			if (currentSpace.getY()-1>=0)
 			newSpace=grid.getGridSpace(currentSpace.getX(), currentSpace.getY()-1);
 		}else if (direction.equals("Down")){
-			if (currentSpace.getY()+1<grid.getSpacesTall())
 			newSpace=grid.getGridSpace(currentSpace.getX(), currentSpace.getY()+1);
 		}
+		System.out.println(newSpace.getX() + "," + newSpace.getY() + " " + newSpace.getOccupied());
 		if (newSpace!=null&&!newSpace.getOccupied()){
 			player.changeOccupiedSpot(newSpace);
 			repaint();
 		}
-		
+
 	}
 	public void paintComponent(Graphics g){
 		super.paintComponent(g);
@@ -89,19 +88,20 @@ public abstract class Maze extends JPanel{
 		setSize(gridWidth()*pixelConstant,gridHeight()*pixelConstant);
 		setBackground(Color.yellow);
 		blockedSpaces=new ArrayList<GridSpace>();
-		if (plates.size()>0){
-			for (Plate current : plates){
+		if (getPlates().size()>0){
+			for (Plate current : getPlates()){
 				for (int counter=0;counter<current.getSpacesCovered().length;counter++){
 					blockedSpaces.add(current.getSpacesCovered()[counter]);
 				}
 			}
-			for (int counter=0;counter<blockedSpaces.size();counter++){
-				GridSpace current=blockedSpaces.get(counter);
-				g2.drawRect(current.getX()*pixelConstant, current.getY()*pixelConstant, pixelConstant, pixelConstant);
-			}
+		}
+		g2.setColor(Color.black);
+		for (int counter=0;counter<blockedSpaces.size();counter++){
+			GridSpace current=blockedSpaces.get(counter);
+			g2.fillRect(current.getX()*pixelConstant, current.getY()*pixelConstant, pixelConstant, pixelConstant);
 		}
 		g2.setColor(Color.cyan);
-		
+
 		g2.fillOval(player.getOccupiedSpot().getX()*pixelConstant,player.getOccupiedSpot().getY()*pixelConstant,pixelConstant,pixelConstant);
 
 	}

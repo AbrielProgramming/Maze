@@ -21,6 +21,7 @@ public abstract class Maze extends JPanel{
 	abstract int gridWidth();
 	abstract int gridHeight();
 	abstract String getLevel();
+	abstract GridSpace gameCompleteSpace();
 	abstract void addPlayer(Player toAdd);
 	abstract GridSpace playerStart();
 	public Player getPlayer(){
@@ -28,6 +29,7 @@ public abstract class Maze extends JPanel{
 	}
 	public void setPlayer(Player newPlayer){
 		player=newPlayer;
+		addPlayer(player);
 	}
 	public void completeLevel(){
 		completed=true;
@@ -55,23 +57,34 @@ public abstract class Maze extends JPanel{
 	private int numPlates(){
 		return getPlates().size();
 	}
+	public boolean gameComplete(){
+		return player.getOccupiedSpot().equals(gameCompleteSpace());
+	}
 	public void movePlayer(String direction){
 		
-		GridSpace newSpace=null;
+		GridSpace newSpace=player.getOccupiedSpot();
 		GridSpace currentSpace=player.getOccupiedSpot();
 		if (direction.equals("Left")){
-			newSpace=grid.getGridSpace(currentSpace.getX()-1, currentSpace.getY());
+			if (currentSpace.getX()>0)
+				newSpace=grid.getGridSpace(currentSpace.getX()-1, currentSpace.getY());
 		}else if (direction.equals("Right")){
-			newSpace=grid.getGridSpace(currentSpace.getX()+1, currentSpace.getY());
+			if (currentSpace.getX()<gridWidth()-1)
+				newSpace=grid.getGridSpace(currentSpace.getX()+1, currentSpace.getY());
 		}else if (direction.equals("Up")){
-			newSpace=grid.getGridSpace(currentSpace.getX(), currentSpace.getY()-1);
+			if (currentSpace.getY()>0)
+				newSpace=grid.getGridSpace(currentSpace.getX(), currentSpace.getY()-1);
 		}else if (direction.equals("Down")){
-			newSpace=grid.getGridSpace(currentSpace.getX(), currentSpace.getY()+1);
+			if (currentSpace.getY()<gridHeight()-1)
+				newSpace=grid.getGridSpace(currentSpace.getX(), currentSpace.getY()+1);
+		}else{
+			newSpace=player.getOccupiedSpot();
 		}
-		System.out.println(newSpace.getX() + "," + newSpace.getY() + " " + newSpace.getOccupied());
-		if (newSpace!=null&&!newSpace.getOccupied()){
+		if (!newSpace.getOccupied()){
 			player.changeOccupiedSpot(newSpace);
 			repaint();
+		}
+		if (newSpace.equals(gameCompleteSpace())){
+			completed=true;
 		}
 
 	}

@@ -1,0 +1,65 @@
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+
+import javax.swing.Timer;
+
+
+public class Level1 extends Maze{
+	private SlidingPlate pl;
+	private ArrayList<Plate> plates;
+
+	public ArrayList<Plate> getPlates(){
+		return plates;
+	}
+	
+
+	public void setPlates(){
+		plates=new ArrayList<Plate>();
+		Plate trial=new Plate(super.getGrid(),3,4,3,"vertical");
+		SlidingPlate p=new SlidingPlate(super.getGrid(), 1, 1, 3, "horizontal", 3, "horizontal");
+		super.getGrid().addPlate(p);
+		super.getGrid().addPlate(trial);
+		pl=p;
+		plates.add(trial);
+		plates.add(p);
+		Timer time=new Timer(1000, new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				pl.move();
+				System.out.println("moved");
+				repaint();
+				for (GridSpace space:pl.getSpacesCovered()) {
+					System.out.println(space.getX()+" "+space.getY());
+				}
+			}
+
+
+		});
+		time.start();
+	}
+
+	public int gridWidth(){
+		return 20;
+	}
+	public int gridHeight(){
+		return 20;
+	}
+	public String getLevel(){
+		return "Level 1";
+	}
+	public void addPlayer(Player toAdd){
+		super.setPlayer(toAdd);
+		toAdd.changeOccupiedSpot(new GridSpace(0,0));
+	}
+	public GridSpace playerStart(){
+		return new GridSpace(0,0);
+	}
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+	}
+
+}
+

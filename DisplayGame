@@ -16,6 +16,7 @@ public class DisplayGame {
 	JLabel showTime;
 	Player player=new Player("Test Player");
 	TrackTime timeTracker;
+	int lastSelectedIndex=0;
 	public DisplayGame(){
 		frame=new JFrame("Labyrinth");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -42,13 +43,13 @@ public class DisplayGame {
 		level.setBackground(Color.white);
 		level.setMaximumSize( level.getPreferredSize() );
 		level.addActionListener(new LevelChoiceListener());
-		
+
 		timeTracker=new TrackTime();
 		showTime=new JLabel(""+timeTracker.getTime());
 		options.add(showTime);
 		options.add(pause);
 		options.add(level);
-
+		
 		bestTimes=new JPanel();
 		bestTimes.setLayout(new BoxLayout(bestTimes,BoxLayout.Y_AXIS));
 		bestTimes.setBackground(Color.green);
@@ -60,7 +61,6 @@ public class DisplayGame {
 		panel.add(Box.createHorizontalGlue());
 		currentMaze.setMaximumSize( currentMaze.getPreferredSize() );
 		currentMaze.setPlayer(player);
-		currentMaze.addPlayer(player);
 		panel.add(currentMaze);
 
 		panel.add(Box.createVerticalGlue());
@@ -71,7 +71,7 @@ public class DisplayGame {
 		frame.pack();
 		frame.setSize(500,500);
 		frame.setVisible(true);
-		
+
 	}
 	private void setBestTimes(){
 		String currentLevel=currentMaze.getLevel();
@@ -85,22 +85,28 @@ public class DisplayGame {
 			if (choice.equals("Level 1")){
 				currentMaze=allMazes[0];
 				levelNum=0;
+				lastSelectedIndex=0;
 				initiateScreen();
+
 			}else if (choice.equals("Level 2")){
 				if (allMazes[0].isCompleted()){
 					currentMaze=allMazes[1];
 					levelNum=1;
+					lastSelectedIndex=1;
 					initiateScreen();
 				}else{
-					
+					JOptionPane.showMessageDialog(null, "You must compelete the previous level before moving on!", "Sorry!", JOptionPane.ERROR_MESSAGE);
+					level.setSelectedIndex(lastSelectedIndex);
 				}
 			}else if (choice.equals("Level 3")){
 				if (allMazes[1].isCompleted()){
 					currentMaze=allMazes[2];
 					levelNum=2;
+					lastSelectedIndex=2;
 					initiateScreen();
 				}else{
-
+					JOptionPane.showMessageDialog(null, "You must compelete the previous level before moving on!", "Sorry!", JOptionPane.ERROR_MESSAGE);
+					level.setSelectedIndex(lastSelectedIndex);
 				}
 			}
 		}
@@ -109,6 +115,19 @@ public class DisplayGame {
 		public void keyPressed(KeyEvent e){
 			String keyName=e.getKeyText(e.getKeyCode());
 			currentMaze.movePlayer(keyName);
+			if (currentMaze.gameComplete()){
+				if (JOptionPane.YES_OPTION==JOptionPane.showConfirmDialog(null,"Congratulations, you won! Would you like to move on to the next level?","Congratulations!", JOptionPane.YES_NO_OPTION)){
+					if (lastSelectedIndex<2){
+						currentMaze=allMazes[lastSelectedIndex+1];
+						currentMaze.setPlayer(player);
+						lastSelectedIndex+=1;
+					}
+					level.setSelectedIndex(lastSelectedIndex);
+					panel.repaint();
+				}else{
+					currentMaze.setPlayer(player);
+				}
+			}
 		}
 	}
 	public static void runGUI(){

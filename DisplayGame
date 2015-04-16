@@ -7,6 +7,7 @@ public class DisplayGame {
 	JPanel panel;
 	JPanel bestTimes;
 	JPanel options;
+	JPanel mazePanel;
 	Timer gameTimer;
 	Maze currentMaze;
 	Maze[] allMazes={new Level1(),new Level2(),new Level3(),new Bonus()};
@@ -17,6 +18,7 @@ public class DisplayGame {
 	Player player=new Player("Test Player");
 	TrackTime timeTracker;
 	int lastSelectedIndex=0;
+	int fontSize=15;
 	public DisplayGame(){
 		frame=new JFrame("Labyrinth");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -53,30 +55,44 @@ public class DisplayGame {
 		bestTimes=new JPanel();
 		bestTimes.setLayout(new BoxLayout(bestTimes,BoxLayout.Y_AXIS));
 		bestTimes.setBackground(Color.green);
-		bestTimes.add(new JLabel("Best Times:"));
 		setBestTimes();
 		options.add(bestTimes);
 		options.add(Box.createVerticalGlue());
 		panel.add(options);
-		panel.add(Box.createHorizontalGlue());
-		currentMaze.setMaximumSize( currentMaze.getPreferredSize() );
 		currentMaze.setPlayer(player);
-		panel.add(currentMaze);
-
-		panel.add(Box.createVerticalGlue());
 		panel.add(Box.createHorizontalGlue());
+		panel.add(currentMaze);
+		panel.add(Box.createHorizontalGlue());
+
 		panel.setFocusable(true);
 		panel.addKeyListener(new KeyBoardListener());
 		frame.setContentPane(panel);
 		frame.pack();
-		frame.setSize(500,500);
+		frame.setSize(500,300);
 		frame.setVisible(true);
-
+		frame.addComponentListener(new ComponentAdapter() {
+		    public void componentResized(ComponentEvent e) {
+		    	currentMaze.setPixelConstant((int)frame.getSize().getWidth()/60);
+		    	currentMaze.repaint();
+		    }
+		});
 	}
+	
 	private void setBestTimes(){
+		
 		String currentLevel=currentMaze.getLevel();
+		JLabel timeLabel=new JLabel("Best Times:");
+		bestTimes.add(timeLabel);
+		int style=timeLabel.getFont().getStyle();
+		String name=timeLabel.getFont().getName();
+		timeLabel.setFont(new Font(name,style,fontSize));
+		
 		for (int counter=0;counter<allMazes.length;counter++){
-			bestTimes.add(new JLabel(allMazes[counter].getLevel() + ": "+ allMazes[counter].getBestTime()));
+			timeLabel=new JLabel(allMazes[counter].getLevel() + ": "+ allMazes[counter].getBestTime());
+			style=timeLabel.getFont().getStyle();
+			name=timeLabel.getFont().getName();
+			timeLabel.setFont(new Font(name,style,fontSize));
+			bestTimes.add(timeLabel);
 		}
 	}
 	class LevelChoiceListener implements ActionListener{

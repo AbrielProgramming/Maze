@@ -1,4 +1,5 @@
 import java.awt.Graphics;
+import javax.swing.Timer;
 import java.sql.*;
 import java.awt.event.*;
 import java.util.*;
@@ -11,12 +12,21 @@ public abstract class Maze extends JPanel{
 	private boolean completed=false;
 	private Player player;
 	private int pixelConstant=10;
+	private Timer timer;
+	private boolean failed=false;
+	private ArrayList<Monster> monsters;
 	public Maze(){
 		setPreferredSize(new Dimension(300,300));
+		pixelConstant=(int)getPreferredSize().getWidth()/30;
 		setGrid();
 		setPlates();
+		monsters=getMonsters();
+		timer=new Timer(500,new TimerListener());
+		timer.setInitialDelay(0);
+		timer.start(); 
 	}
 	abstract ArrayList<Plate> getPlates();
+	abstract ArrayList<SlidingPlate> getSlidingPlates();
 	abstract void setPlates();
 	abstract int gridWidth();
 	abstract int gridHeight();
@@ -24,6 +34,14 @@ public abstract class Maze extends JPanel{
 	abstract GridSpace gameCompleteSpace();
 	abstract void addPlayer(Player toAdd);
 	abstract GridSpace playerStart();
+	abstract ArrayList<Monster> getMonsters();
+	public void setPixelConstant(int newConstant){
+		pixelConstant=newConstant;
+		
+	}
+	public int getPixelConstant(){
+		return pixelConstant;
+	}
 	public Player getPlayer(){
 		return player;
 	}
@@ -37,6 +55,10 @@ public abstract class Maze extends JPanel{
 	public boolean isCompleted(){
 		return completed;
 	}
+	public boolean isFailed(){
+		return failed;
+	}
+	
 	public void setBestTime(Time newTime){
 		bestTime=newTime;
 	}
@@ -86,6 +108,9 @@ public abstract class Maze extends JPanel{
 		if (newSpace.equals(gameCompleteSpace())){
 			completed=true;
 		}
+		
+		
+		
 
 	}
 	public void paintComponent(Graphics g){
@@ -116,7 +141,21 @@ public abstract class Maze extends JPanel{
 		g2.setColor(Color.cyan);
 
 		g2.fillOval(player.getOccupiedSpot().getX()*pixelConstant,player.getOccupiedSpot().getY()*pixelConstant,pixelConstant,pixelConstant);
-
+		
+		g2.setColor(Color.orange);
+		
+		for (Monster current : monsters){
+			GridSpace position=current.getOccupiedSpot();
+			g2.fillRect(position.getX()*pixelConstant, position.getY()*pixelConstant, pixelConstant, pixelConstant);
+		}
+	}
+	class TimerListener implements ActionListener{
+		public void actionPerformed(ActionEvent e){
+			for (Monster current : monsters){
+				current.move();
+			}
+			repaint();
+		}
 	}
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub

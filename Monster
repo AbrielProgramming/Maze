@@ -40,19 +40,30 @@ public class Monster {
 		//need to make sure doesnt go over edge
 		if (movement!=null){
 			char dir=movement[movementStep];
+			GridSpace space=getOccupiedSpot();
+			if (space.getOccupiedBy().getClass()==Plate.class || space.getOccupiedBy().getClass()==SlidingPlate.class) {
+				//do nothing
+			} else {
+				space.editMovement(true);
+				space.editOccupiedBy(null);
+			}
 			if (dir=='r') {
 				occupied=grid.getGridSpace(occupied.getX()+1, occupied.getY());
 				occupied.editMovement(false);
+				occupied.editOccupiedBy(this);
 				
 			} else if (dir=='l') {
 				occupied=grid.getGridSpace(occupied.getX()-1, occupied.getY());
 				occupied.editMovement(false);
+				occupied.editOccupiedBy(this);
 			} else if (dir=='u') {
 				occupied=grid.getGridSpace(occupied.getX(), occupied.getY()+1);
 				occupied.editMovement(false);
+				occupied.editOccupiedBy(this);
 			} else if (dir=='d') {
 				occupied=grid.getGridSpace(occupied.getX(), occupied.getY()-1);
 				occupied.editMovement(false);
+				occupied.editOccupiedBy(this);
 			}
 			if (movementStep==movement.length-1) {
 				movementDirection=false;

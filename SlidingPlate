@@ -68,7 +68,7 @@ public class SlidingPlate extends Plate {
 				//vertical 
 				if (moveDir) {
 					//vertical movement with vertical orientation
-					GridSpace space=super.getGrid().getGridSpace(super.xStart(), super.yStart()+super.length()+movementStep+1);
+					GridSpace space=super.getGrid().getGridSpace(super.xStart(), super.yStart()+super.length()+movementStep);
 					space.editMovement(false);
 					space.editOccupiedBy(this);
 					space=super.getGrid().getGridSpace(super.xStart(), super.yStart()+movementStep);
@@ -105,7 +105,7 @@ public class SlidingPlate extends Plate {
 				//horizontal
 				if (!moveDir) {
 					//horizontal movement with horizontal orientation
-					GridSpace space=super.getGrid().getGridSpace(super.xStart()+super.length()+movementStep+1, super.yStart());
+					GridSpace space=super.getGrid().getGridSpace(super.xStart()+super.length()+movementStep, super.yStart());
 					space.editMovement(false);
 					space.editOccupiedBy(this);
 					System.out.println("new space "+space.getX()+" "+space.getY());
@@ -144,11 +144,12 @@ public class SlidingPlate extends Plate {
 			//opposite movementDirection, going backwards
 			if (super.orientation().equals("vertical")) {
 				if (moveDir) {
-					editCovered(super.xStart(), super.yStart()+movementStep+1);
-					GridSpace space=super.getGrid().getGridSpace(super.xStart(), super.yStart()+super.length()+movementStep+1);
+					editCovered(super.xStart(), super.yStart()+movementStep);
+					GridSpace space=super.getGrid().getGridSpace(super.xStart(), super.yStart()+movementStep);
 					space.editMovement(false);
 					space.editOccupiedBy(this);
-					space=super.getGrid().getGridSpace(super.xStart(), super.yStart()+movementStep+1);
+					
+					space=super.getGrid().getGridSpace(super.xStart(), super.yStart()+super.length()+movementStep);
 					if (space.getOccupiedBy()!=this && space.getOccupiedBy()!=null && space.getOccupiedBy().getClass()==Plate.class) {
 						//do nothing
 					} else {
@@ -177,10 +178,12 @@ public class SlidingPlate extends Plate {
 			} else if (super.orientation().equals("horizontal")) {
 				if (!moveDir) {
 					editCovered(super.xStart()+movementStep, super.yStart());
-					GridSpace space=super.getGrid().getGridSpace(super.xStart()+super.length()+movementStep, super.yStart());
+					GridSpace space=super.getGrid().getGridSpace(super.xStart()+movementStep, super.yStart());
 					space.editMovement(false);
+					System.out.println("new space " +space.getX()+" " +space.getY());
 					space.editOccupiedBy(this);
-					space=super.getGrid().getGridSpace(super.xStart()+movementStep+1, super.yStart());
+					
+					space=super.getGrid().getGridSpace(super.xStart()+super.length()+movementStep, super.yStart());
 					if (space.getOccupiedBy()!=this && space.getOccupiedBy()!=null && space.getOccupiedBy().getClass()==Plate.class) {
 						//do nothing
 					} else {

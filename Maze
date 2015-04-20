@@ -14,16 +14,14 @@ public abstract class Maze extends JPanel{
 	private int pixelConstant=10;
 	private Timer timer;
 	private boolean failed=false;
-	private ArrayList<Monster> monsters;
 	public Maze(){
 		setPreferredSize(new Dimension(300,300));
 		pixelConstant=(int)getPreferredSize().getWidth()/30;
 		setGrid();
 		setPlates();
-		monsters=getMonsters();
 		timer=new Timer(500,new TimerListener());
 		timer.setInitialDelay(0);
-		timer.start(); 
+		
 	}
 	abstract ArrayList<Plate> getPlates();
 	abstract ArrayList<SlidingPlate> getSlidingPlates();
@@ -38,6 +36,9 @@ public abstract class Maze extends JPanel{
 	public void setPixelConstant(int newConstant){
 		pixelConstant=newConstant;
 		
+	}
+	public void startTimer(){
+		timer.start(); 
 	}
 	public int getPixelConstant(){
 		return pixelConstant;
@@ -144,15 +145,27 @@ public abstract class Maze extends JPanel{
 		
 		g2.setColor(Color.orange);
 		
-		for (Monster current : monsters){
+		for (Monster current : getMonsters()){
 			GridSpace position=current.getOccupiedSpot();
 			g2.fillRect(position.getX()*pixelConstant, position.getY()*pixelConstant, pixelConstant, pixelConstant);
 		}
+		
 	}
 	class TimerListener implements ActionListener{
 		public void actionPerformed(ActionEvent e){
-			for (Monster current : monsters){
+			for (Monster current : getMonsters()){
 				current.move();
+				if (current.getOccupiedSpot()==player.getOccupiedSpot())
+					failed=true;
+			}
+			for (SlidingPlate current : getSlidingPlates()){
+				if ((int)(Math.random()*10)<5)
+					current.move();
+				for (int counter=0;counter<current.getSpacesCovered().length;counter++){
+					if (current.getSpacesCovered()[counter]==player.getOccupiedSpot()){
+						failed=true;
+					}
+				}
 			}
 			repaint();
 		}

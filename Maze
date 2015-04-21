@@ -14,7 +14,9 @@ public abstract class Maze extends JPanel{
 	private int pixelConstant=10;
 	private Timer timer;
 	private boolean failed=false;
-	public Maze(){
+	private DisplayGame game;
+	public Maze(DisplayGame game){
+		this.game=game;
 		setPreferredSize(new Dimension(300,300));
 		pixelConstant=(int)getPreferredSize().getWidth()/30;
 		setGrid();
@@ -33,6 +35,7 @@ public abstract class Maze extends JPanel{
 	abstract void addPlayer(Player toAdd);
 	abstract GridSpace playerStart();
 	abstract ArrayList<Monster> getMonsters();
+	abstract boolean platesRandom();
 	public void setPixelConstant(int newConstant){
 		pixelConstant=newConstant;
 		
@@ -155,15 +158,18 @@ public abstract class Maze extends JPanel{
 		public void actionPerformed(ActionEvent e){
 			for (Monster current : getMonsters()){
 				current.move();
-				if (current.getOccupiedSpot()==player.getOccupiedSpot())
+				if (current.getOccupiedSpot()==player.getOccupiedSpot()){
 					failed=true;
+					game.failedMaze();
+				}
 			}
 			for (SlidingPlate current : getSlidingPlates()){
-				if ((int)(Math.random()*10)<5)
+				if (!platesRandom()||(int)(Math.random()*10)<5)
 					current.move();
 				for (int counter=0;counter<current.getSpacesCovered().length;counter++){
 					if (current.getSpacesCovered()[counter]==player.getOccupiedSpot()){
 						failed=true;
+						game.failedMaze();
 					}
 				}
 			}

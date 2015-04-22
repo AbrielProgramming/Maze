@@ -38,6 +38,13 @@ public class Plate {
 	public GridSpace[] getSpacesCovered() {
 		return covered;
 	}
+	
+	public void setGridSpace(int x, int y) {
+		GridSpace space=getGrid().getGridSpace(x, y);
+		space.editMovement(false);
+		space.editOccupiedBy(this);
+	}
+	
 	public void setGrid() {
 		if (orientation=="vertical") {
 			for (int i=0; i<length; i++) {

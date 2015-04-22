@@ -2,10 +2,10 @@ import java.util.ArrayList;
 
 
 public class Grid {
-private int width;
-private int height;
-private GridSpace[][] coordinates;
-private ArrayList<Plate> plates;
+	private int width;
+	private int height;
+	private GridSpace[][] coordinates;
+	private ArrayList<Plate> plates;
 	public Grid(int width, int height) {
 		this.width=width;
 		this.height=height;
@@ -31,35 +31,38 @@ private ArrayList<Plate> plates;
 	public GridSpace[][] getGrid() {
 		return coordinates;
 	}
-	
+
 	public void addPlate(Plate a) {
 		//just to help us debug
-		ArrayList<GridSpace> allowed=getAllowMovementSpaces();
+		//	ArrayList<GridSpace> allowed=getAllowMovementSpaces();
 		Plate plate=a;
-		int[] works=new int[a.length()];
-		int i=1;
-		for (GridSpace space: allowed) {
-			for (GridSpace otherSpace: a.getSpacesCovered()) {
-				if (space.getX()==otherSpace.getX()&& space.getY()==otherSpace.getY()) {
-					works[i-1]=-i;
-					i++;
+		//	int[] works=new int[a.length()];
+		//	int i=1;
+		//fix this to allow overlap
+		//and something about monsters
+		if (a.getClass()==SlidingPlate.class) {
+			for (GridSpace space: a.getSpacesCovered()) {
+				if (space.getOccupiedBy()!=null && space.getOccupiedBy().getClass()!=Plate.class) {
+					System.out.println("sliding plate occupiedBy at "+space.getX()+" "+space.getY());
+					a.setGridSpace(space.getX(), space.getY());
+				} else {
+					System.out.println("already occupiedBy plate at "+space.getX()+" "+space.getY());
 				}
 			}
+		} else {
+			plate.setGrid();
 		}
-		for (int num: works) {
-			if (num==0) {
-				System.out.println("can't add");
-				return;
-			}
-		}
-		plate.setGrid();
+
 		
+
+
 	}
-	
+
 	public void addMonster(Monster mon) {
 		//also to make creating new levels easier
 		ArrayList<GridSpace> allowed=getAllowMovementSpaces();
 		for (GridSpace space: allowed) {
+			//System.out.println("new spot"+ space.getX()+space.getY());
 			if (space==mon.getOccupiedSpot()) {
 				mon.setGrid();
 				return;
@@ -68,7 +71,7 @@ private ArrayList<Plate> plates;
 		//monster movement needs to be checked
 		System.out.println("can't add");
 	}
-	
+
 	public void addPlayer(Player ply) {
 		//also to help us not make mistakes
 		ArrayList<GridSpace> allowed=getAllowMovementSpaces();
@@ -80,7 +83,7 @@ private ArrayList<Plate> plates;
 		}
 		System.out.println("can't add");
 	}
-	
+
 	public GridSpace getGridSpace(int i, int j) {
 		return coordinates[i][j];
 	}
@@ -92,7 +95,7 @@ private ArrayList<Plate> plates;
 				if (space.getAllowedMovement()){
 					allowed.add(space);
 				}
-				
+
 			}
 		}
 		return allowed;

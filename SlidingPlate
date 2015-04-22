@@ -69,11 +69,13 @@ public class SlidingPlate extends Plate {
 				if (moveDir) {
 					//vertical movement with vertical orientation
 					GridSpace space=super.getGrid().getGridSpace(super.xStart(), super.yStart()+super.length()+movementStep);
+					if (space.getOccupiedBy()==null){
 					space.editMovement(false);
 					space.editOccupiedBy(this);
+					}
 					space=super.getGrid().getGridSpace(super.xStart(), super.yStart()+movementStep);
 					
-					if (space.getOccupiedBy()!=this && space.getOccupiedBy().getClass()==Plate.class) {
+					if (space.getOccupiedBy()!=null && (space.getOccupiedBy()!=this || space.getOccupiedBy().getClass()==Plate.class)) {
 						//do nothing
 					} else {
 						space.editMovement(true);
@@ -83,17 +85,21 @@ public class SlidingPlate extends Plate {
 				} else {
 					//horizontal movement with vertical orientation
 					GridSpace space;
-					for (int i=0; i<super.length()-1; i++) {
+					for (int i=0; i<super.length(); i++) {
 						space=super.getGrid().getGridSpace(super.xStart()+1+movementStep, super.yStart()+i);
-						space.editMovement(false);
-						space.editOccupiedBy(this);
+						if (space.getOccupiedBy()==null){
+							space.editMovement(false);
+							space.editOccupiedBy(this);
+							}
 					}
 					
-					for (int i=0; i<super.length()-1; i++) {
+					for (int i=0; i<super.length(); i++) {
 						space=super.getGrid().getGridSpace(super.xStart()+movementStep, super.yStart()+i);
-						if (space.getOccupiedBy()!=this &&space.getOccupiedBy().getClass()==Plate.class) {
+						if (space.getOccupiedBy()!=null && (space.getOccupiedBy()!=this || space.getOccupiedBy().getClass()==Plate.class)) {
 							//do nothing
+							
 						} else {
+							
 							space.editMovement(true);
 							space.editOccupiedBy(null);
 						}
@@ -106,12 +112,14 @@ public class SlidingPlate extends Plate {
 				if (!moveDir) {
 					//horizontal movement with horizontal orientation
 					GridSpace space=super.getGrid().getGridSpace(super.xStart()+super.length()+movementStep, super.yStart());
-					space.editMovement(false);
-					space.editOccupiedBy(this);
+					if (space.getOccupiedBy()==null){
+						space.editMovement(false);
+						space.editOccupiedBy(this);
+						}
 					System.out.println("new space "+space.getX()+" "+space.getY());
 					space=super.getGrid().getGridSpace(super.xStart()+movementStep, super.yStart());
 					editCovered(super.xStart()+movementStep+1, super.yStart());
-					if (space.getOccupiedBy()!=this && space.getOccupiedBy()!=null && space.getOccupiedBy().getClass()==Plate.class) {
+					if (space.getOccupiedBy()!=null && (space.getOccupiedBy()!=this || space.getOccupiedBy().getClass()==Plate.class)) {
 						//do nothing
 					} else {
 						
@@ -122,16 +130,20 @@ public class SlidingPlate extends Plate {
 					//vertical movement with horizontal orientation
 					GridSpace space;
 					editCovered(super.xStart(), super.yStart()+movementStep+1);
-					for (int i=0; i<super.length()-1; i++) {
+					for (int i=0; i<super.length(); i++) {
 						space=super.getGrid().getGridSpace(super.xStart()+i, super.yStart()+movementStep+1);
-						space.editMovement(false);
-						space.editOccupiedBy(this);
+						if (space.getOccupiedBy()==null){
+							space.editMovement(false);
+							space.editOccupiedBy(this);
+							}
 					}
-					for (int i=0; i<super.length()-1; i++) {
+					for (int i=0; i<super.length(); i++) {
 						space=super.getGrid().getGridSpace(super.xStart()+i, super.yStart()+movementStep);
-						if (space. getOccupiedBy()!=null && space.getOccupiedBy().getClass()==Plate.class) {
+						if (space.getOccupiedBy()!=null && (space.getOccupiedBy()!=this || space.getOccupiedBy().getClass()==Plate.class)) {
 							//do nothing
+							System.out.println("did nothing on "+space.getX()+" "+space.getY());
 						} else {
+							System.out.println("overlapping plate "+space.getX()+" "+space.getY()+"\t occup by= "+space.getOccupiedBy().getClass().getName());
 							space.editMovement(true);
 							space.editOccupiedBy(null);
 						}
@@ -146,11 +158,13 @@ public class SlidingPlate extends Plate {
 				if (moveDir) {
 					editCovered(super.xStart(), super.yStart()+movementStep);
 					GridSpace space=super.getGrid().getGridSpace(super.xStart(), super.yStart()+movementStep);
-					space.editMovement(false);
-					space.editOccupiedBy(this);
+					if (space.getOccupiedBy()==null){
+						space.editMovement(false);
+						space.editOccupiedBy(this);
+						}
 					
 					space=super.getGrid().getGridSpace(super.xStart(), super.yStart()+super.length()+movementStep);
-					if (space.getOccupiedBy()!=this && space.getOccupiedBy()!=null && space.getOccupiedBy().getClass()==Plate.class) {
+					if (space.getOccupiedBy()!=null && (space.getOccupiedBy()!=this || space.getOccupiedBy().getClass()==Plate.class)) {
 						//do nothing
 					} else {
 						space.editMovement(true);
@@ -159,14 +173,16 @@ public class SlidingPlate extends Plate {
 				} else {
 					GridSpace space;
 					editCovered(super.xStart()+movementStep, super.yStart());
-					for (int i=0; i<super.length()-1; i++) {
+					for (int i=0; i<super.length(); i++) {
 						space=super.getGrid().getGridSpace(super.xStart()+movementStep, super.yStart()+i);
-						space.editMovement(false);
-						space.editOccupiedBy(this);
+						if (space.getOccupiedBy()==null){
+							space.editMovement(false);
+							space.editOccupiedBy(this);
+							}
 					}
-					for (int i=0; i<super.length()-1; i++) {
+					for (int i=0; i<super.length(); i++) {
 						space=super.getGrid().getGridSpace(super.xStart()+movementStep+1, super.yStart()+i);
-						if (space.getOccupiedBy()!=this && space.getOccupiedBy()!=null && space.getOccupiedBy().getClass()==Plate.class) {
+						if (space.getOccupiedBy()!=null && (space.getOccupiedBy()!=this || space.getOccupiedBy().getClass()==Plate.class)) {
 							//do nothing
 						} else {
 							space.editMovement(true);
@@ -179,12 +195,13 @@ public class SlidingPlate extends Plate {
 				if (!moveDir) {
 					editCovered(super.xStart()+movementStep, super.yStart());
 					GridSpace space=super.getGrid().getGridSpace(super.xStart()+movementStep, super.yStart());
-					space.editMovement(false);
-					System.out.println("new space " +space.getX()+" " +space.getY());
-					space.editOccupiedBy(this);
+					if (space.getOccupiedBy()==null){
+						space.editMovement(false);
+						space.editOccupiedBy(this);
+						}
 					
 					space=super.getGrid().getGridSpace(super.xStart()+super.length()+movementStep, super.yStart());
-					if (space.getOccupiedBy()!=this && space.getOccupiedBy()!=null && space.getOccupiedBy().getClass()==Plate.class) {
+					if (space.getOccupiedBy()!=null && (space.getOccupiedBy()!=this || space.getOccupiedBy().getClass()==Plate.class)) {
 						//do nothing
 					} else {
 						space.editMovement(true);
@@ -193,14 +210,16 @@ public class SlidingPlate extends Plate {
 				} else {
 					GridSpace space;
 					editCovered(super.xStart(), super.yStart()+movementStep);
-					for (int i=0; i<super.length()-1; i++) {
+					for (int i=0; i<super.length(); i++) {
 						space=super.getGrid().getGridSpace(super.xStart()+i, super.yStart()+movementStep);
-						space.editMovement(false);
-						space.editOccupiedBy(this);
+						if (space.getOccupiedBy()==null){
+							space.editMovement(false);
+							space.editOccupiedBy(this);
+							}
 					}
-					for (int i=0; i<super.length()-1; i++) {
+					for (int i=0; i<super.length(); i++) {
 						space=super.getGrid().getGridSpace(super.xStart()+i, super.yStart()+movementStep+1);
-						if (space.getOccupiedBy()!=null && space.getOccupiedBy().getClass()==Plate.class) {
+						if (space.getOccupiedBy()!=null && (space.getOccupiedBy()!=this || space.getOccupiedBy().getClass()==Plate.class)) {
 							//do nothing
 							//add the null stuff
 						} else {
@@ -222,14 +241,14 @@ public class SlidingPlate extends Plate {
 			movementDirection=false;
 			movementStep--;
 			
-			System.out.println("changed movement direction");
+		//	System.out.println("changed movement direction");
 		} else if (movementStep==-1) {
 			movementDirection=true;
 			movementStep++;
 		}
 
 		
-		System.out.println("movementstep number "+movementStep);
+		//System.out.println("movementstep number "+movementStep);
 
 	}
 

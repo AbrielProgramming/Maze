@@ -112,7 +112,12 @@ public abstract class Maze extends JPanel{
 		if (newSpace.equals(gameCompleteSpace())){
 			completed=true;
 		}
-		
+		for (Monster monster : getMonsters()){
+			if (monster.getOccupiedSpot()==newSpace){
+				failed=true;
+				game.failedMaze();
+			}
+		}
 		
 		
 
@@ -158,7 +163,8 @@ public abstract class Maze extends JPanel{
 		public void actionPerformed(ActionEvent e){
 			for (Monster current : getMonsters()){
 				current.move();
-				if (current.getOccupiedSpot()==player.getOccupiedSpot()){
+				if (current.getOccupiedSpot()==player.getOccupiedSpot()&&!failed){
+					System.out.println(failed);
 					failed=true;
 					game.failedMaze();
 				}

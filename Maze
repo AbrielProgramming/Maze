@@ -8,13 +8,14 @@ import java.awt.*;
 public abstract class Maze extends JPanel{
 	private Grid grid;
 	private ArrayList<GridSpace> blockedSpaces;
-	private Time bestTime=new Time(0,0,0);
+	private String bestTime="00:00:00";
 	private boolean completed=false;
 	private Player player;
 	private int pixelConstant=10;
 	private Timer timer;
 	private boolean failed=false;
 	private DisplayGame game;
+	private TrackTime timeTracker;
 	public Maze(DisplayGame game){
 		this.game=game;
 		setPreferredSize(new Dimension(300,300));
@@ -23,7 +24,7 @@ public abstract class Maze extends JPanel{
 		setPlates();
 		timer=new Timer(500,new TimerListener());
 		timer.setInitialDelay(0);
-		
+		timeTracker=new TrackTime();
 	}
 	abstract ArrayList<Plate> getPlates();
 	abstract ArrayList<SlidingPlate> getSlidingPlates();
@@ -42,6 +43,13 @@ public abstract class Maze extends JPanel{
 	}
 	public void startTimer(){
 		timer.start(); 
+		timeTracker.startTiming();
+	}
+	public void restartTimer(){
+		timeTracker.startTiming();
+	}
+	public String getTime(){
+		return timeTracker.getTime();
 	}
 	public int getPixelConstant(){
 		return pixelConstant;
@@ -63,10 +71,7 @@ public abstract class Maze extends JPanel{
 		return failed;
 	}
 	
-	public void setBestTime(Time newTime){
-		bestTime=newTime;
-	}
-	public Time getBestTime(){
+	public String getBestTime(){
 		return bestTime;
 	}
 	public Grid getGrid(){
@@ -111,10 +116,15 @@ public abstract class Maze extends JPanel{
 		}
 		if (newSpace.equals(gameCompleteSpace())){
 			completed=true;
+			timeTracker.stopTiming();
+			String newBest=timeTracker.compareTimes(timeTracker.getTime(), bestTime);
+			bestTime=newBest;
+			timeTracker.refreshTimer();
 		}
 		for (Monster monster : getMonsters()){
 			if (monster.getOccupiedSpot()==newSpace){
 				failed=true;
+				timeTracker.refreshTimer();
 				game.failedMaze();
 			}
 		}
@@ -166,6 +176,7 @@ public abstract class Maze extends JPanel{
 				if (current.getOccupiedSpot()==player.getOccupiedSpot()&&!failed){
 					System.out.println(failed);
 					failed=true;
+					timeTracker.refreshTimer();
 					game.failedMaze();
 				}
 			}
@@ -175,6 +186,7 @@ public abstract class Maze extends JPanel{
 				for (int counter=0;counter<current.getSpacesCovered().length;counter++){
 					if (current.getSpacesCovered()[counter]==player.getOccupiedSpot()){
 						failed=true;
+						timeTracker.refreshTimer();
 						game.failedMaze();
 					}
 				}

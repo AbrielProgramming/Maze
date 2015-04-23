@@ -1,6 +1,7 @@
 import java.awt.event.*;
 import java.awt.*;
 import javax.swing.*;
+
 public class DisplayGame {
 
 	JFrame frame;
@@ -49,8 +50,11 @@ public class DisplayGame {
 		level.setAutoscrolls(true);
 
 		timeTracker=new TrackTime();
-		showTime=new JLabel(""+timeTracker.getTime());
+		showTime=new JLabel(currentMaze.getTime());
 		showTime.setForeground(Color.yellow);
+		int style=showTime.getFont().getStyle();
+		String name=showTime.getFont().getName();
+		showTime.setFont(new Font(name,style,30));
 		options.add(showTime);
 		options.add(pause);
 		options.add(level);
@@ -80,6 +84,9 @@ public class DisplayGame {
 			}
 		});
 		currentMaze.startTimer();
+		gameTimer=new Timer(500,new TimerListener());
+		gameTimer.setInitialDelay(0);
+		gameTimer.start();
 	}
 	public void newLevelBox(){
 		frame.dispose();
@@ -87,23 +94,26 @@ public class DisplayGame {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		panel=new JPanel();
 		panel.setLayout(new BoxLayout(panel,BoxLayout.X_AXIS));
-		panel.setBackground(Color.green);
+		panel.setBackground(Color.black);
 		options=new JPanel();
 		options.setLayout(new BoxLayout(options,BoxLayout.Y_AXIS));
-		options.setBackground(Color.green);
+		options.setBackground(Color.black);
 		pause=new JButton("Pause");
 		pause.setSize(100,100);
 		pause.setActionCommand("pause");
 		String[] levels={"Level 1","Level 2","Level 3"};
 		timeTracker=new TrackTime();
 		showTime=new JLabel(""+timeTracker.getTime());
+		int style=showTime.getFont().getStyle();
+		String name=showTime.getFont().getName();
+		showTime.setFont(new Font(name,style,30));
 		options.add(showTime);
 		options.add(pause);
 		options.add(level);
 
 		bestTimes=new JPanel();
 		bestTimes.setLayout(new BoxLayout(bestTimes,BoxLayout.Y_AXIS));
-		bestTimes.setBackground(Color.green);
+		bestTimes.setBackground(Color.black);
 		setBestTimes(true);
 		options.add(bestTimes);
 		options.add(Box.createVerticalGlue());
@@ -141,7 +151,7 @@ public class DisplayGame {
 		int style=timeLabel.getFont().getStyle();
 		String name=timeLabel.getFont().getName();
 		timeLabel.setFont(new Font(name,style,fontSize));
-		
+
 		for (int counter=0;counter<allMazes.length;counter++){
 			timeLabel=new JLabel(allMazes[counter].getLevel() + ": "+ allMazes[counter].getBestTime());
 			style=timeLabel.getFont().getStyle();
@@ -207,20 +217,30 @@ public class DisplayGame {
 					newLevelBox();
 				}else if (currentMaze.getLevel().equals("Bonus")){
 					JOptionPane.showMessageDialog(null, "Congratulations! You won the game!", "Game Won!", JOptionPane.INFORMATION_MESSAGE);
-					
+
 				}else if (JOptionPane.YES_OPTION==JOptionPane.showConfirmDialog(null,"Congratulations, you won! Would you like to move on to the next level?","Congratulations!", JOptionPane.YES_NO_OPTION)){
 
-						if (lastSelectedIndex<2){
-							currentMaze=allMazes[lastSelectedIndex+1];
-							currentMaze.setPlayer(player);
-							lastSelectedIndex+=1;
-						}
-						level.setSelectedIndex(lastSelectedIndex);
-						panel.repaint();
-					}else{
+					if (lastSelectedIndex<2){
+						currentMaze=allMazes[lastSelectedIndex+1];
 						currentMaze.setPlayer(player);
+						lastSelectedIndex+=1;
 					}
+					level.setSelectedIndex(lastSelectedIndex);
+					panel.repaint();
+				}else{
+					currentMaze.setPlayer(player);
+					currentMaze.restartTimer();
+					panel.repaint();
+				}
+				
+
 			}
+		}
+	}
+	class TimerListener implements ActionListener{
+		public void actionPerformed(ActionEvent e){
+			showTime.setText(currentMaze.getTime());
+
 		}
 	}
 	public static void runGUI(){

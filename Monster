@@ -8,7 +8,7 @@ public class Monster {
 	//private int speed;	//speed in is seconds
 	private int movementStep;
 	private Grid grid;
-	private boolean movementDirection;
+
 
 	public Monster(Grid grid, GridSpace start, char[] move) {
 		occupied=start;
@@ -16,7 +16,7 @@ public class Monster {
 		//speed=spd;
 		movementStep=0;
 		this.grid=grid;
-		movementDirection=true;
+
 	}
 
 	public void changeOccupiedSpot(GridSpace space) {
@@ -25,7 +25,7 @@ public class Monster {
 	
 	public void setGrid() {
 		getOccupiedSpot().editMovement(false);
-		getOccupiedSpot().editOccupiedBy(this);
+	//	getOccupiedSpot().editOccupiedBy(this);
 	}
 
 	public GridSpace getOccupiedSpot() {
@@ -41,11 +41,11 @@ public class Monster {
 		if (movement!=null){
 			char dir=movement[movementStep];
 			GridSpace space=getOccupiedSpot();
-			if (space.getOccupiedBy().getClass()==Plate.class || space.getOccupiedBy().getClass()==SlidingPlate.class) {
+			if (space.getOccupiedBy()!=null &&(space.getOccupiedBy().getClass()==Plate.class || space.getOccupiedBy().getClass()==SlidingPlate.class)) {
 				//do nothing
 			} else {
 				space.editMovement(true);
-				space.editOccupiedBy(null);
+				//space.editOccupiedBy(null);
 			}
 			if (dir=='r') {
 				occupied=grid.getGridSpace(occupied.getX()+1, occupied.getY());
@@ -57,24 +57,21 @@ public class Monster {
 				occupied.editMovement(false);
 				occupied.editOccupiedBy(this);
 			} else if (dir=='u') {
-				occupied=grid.getGridSpace(occupied.getX(), occupied.getY()+1);
+				occupied=grid.getGridSpace(occupied.getX(), occupied.getY()-1);
 				occupied.editMovement(false);
 				occupied.editOccupiedBy(this);
 			} else if (dir=='d') {
-				occupied=grid.getGridSpace(occupied.getX(), occupied.getY()-1);
+				occupied=grid.getGridSpace(occupied.getX(), occupied.getY()+1);
 				occupied.editMovement(false);
 				occupied.editOccupiedBy(this);
 			}
 			if (movementStep==movement.length-1) {
-				movementDirection=false;
-			} else if (movementStep==0) {
-				movementDirection=true;
-			}
-			if (movementDirection) {
-				movementStep++;
+				movementStep=0;
 			} else {
-				movementStep--;
+
+				movementStep++;
 			}
+
 		}
 		
 

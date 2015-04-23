@@ -25,7 +25,7 @@ public class Monster {
 	
 	public void setGrid() {
 		getOccupiedSpot().editMovement(false);
-	//	getOccupiedSpot().editOccupiedBy(this);
+		getOccupiedSpot().editOccupiedBy(this);
 	}
 
 	public GridSpace getOccupiedSpot() {
@@ -45,7 +45,7 @@ public class Monster {
 				//do nothing
 			} else {
 				space.editMovement(true);
-				//space.editOccupiedBy(null);
+				space.editOccupiedBy(null);
 			}
 			if (dir=='r') {
 				occupied=grid.getGridSpace(occupied.getX()+1, occupied.getY());

@@ -127,7 +127,7 @@ public class DisplayGame {
 		panel.addKeyListener(new KeyBoardListener());
 		frame.setContentPane(panel);
 		frame.pack();
-		frame.setSize(500,300);
+		//frame.setSize(900,700);
 		frame.setVisible(true);
 		frame.addComponentListener(new ComponentAdapter() {
 			public void componentResized(ComponentEvent e) {
@@ -170,6 +170,7 @@ public class DisplayGame {
 				levelNum=0;
 				lastSelectedIndex=0;
 				initiateScreen();
+				currentMaze.startTimer();
 
 			}else if (choice.equals("Level 2")){
 				if (allMazes[0].isCompleted()){
@@ -177,6 +178,7 @@ public class DisplayGame {
 					levelNum=1;
 					lastSelectedIndex=1;
 					initiateScreen();
+					currentMaze.startTimer();
 				}else{
 					JOptionPane.showMessageDialog(null, "You must compelete the previous level before moving on!", "Sorry!", JOptionPane.ERROR_MESSAGE);
 					level.setSelectedIndex(lastSelectedIndex);
@@ -187,6 +189,7 @@ public class DisplayGame {
 					levelNum=2;
 					lastSelectedIndex=2;
 					initiateScreen();
+					currentMaze.startTimer();
 				}else{
 					JOptionPane.showMessageDialog(null, "You must compelete the previous level before moving on!", "Sorry!", JOptionPane.ERROR_MESSAGE);
 					level.setSelectedIndex(lastSelectedIndex);

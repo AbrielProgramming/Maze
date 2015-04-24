@@ -1,20 +1,43 @@
+import java.util.ArrayList;
+
 
 public class Bonus extends Maze{
-
+	private ArrayList<Plate> plates=new ArrayList();
+	private ArrayList<SlidingPlate> slidingPlates;
+	private ArrayList<Monster> monsters;
+	public Bonus(DisplayGame game){
+		super(game);
+	}
+	public ArrayList<Monster> getMonsters(){
+		return monsters;
+	}
+	public boolean platesRandom(){
+		return false;
+	}
+	public ArrayList<SlidingPlate> getSlidingPlates(){
+		return slidingPlates;
+	}
+	public ArrayList<Plate> getPlates(){
+		return plates;
+	}
+	public GridSpace gameCompleteSpace(){
+		return super.getGrid().getGridSpace(29, 29);
+	}
 	public void setPlates(){
-
+		plates=new ArrayList<Plate>();
+		slidingPlates=new ArrayList<SlidingPlate>();
+		monsters=new ArrayList<Monster>();
 	}
 	public int gridWidth(){
-		return 10;
+		return 30;
 	}
 	public int gridHeight(){
-		return 10;
+		return 30;
 	}
 	public String getLevel(){
-		return "Level 1";
+		return "Bonus";
 	}
 	public void addPlayer(Player toAdd){
-		setPlayer(toAdd);
 		toAdd.changeOccupiedSpot(new GridSpace(0,0));
 	}
 	public GridSpace playerStart(){

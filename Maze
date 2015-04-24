@@ -8,7 +8,7 @@ import java.awt.*;
 public abstract class Maze extends JPanel{
 	private Grid grid;
 	private ArrayList<GridSpace> blockedSpaces;
-	private String bestTime="00:00:00";
+	private String bestTime="00:00";
 	private boolean completed=false;
 	private Player player;
 	private int pixelConstant=10;

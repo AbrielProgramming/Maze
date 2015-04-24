@@ -15,23 +15,29 @@ public class StartPage extends JFrame{
 		int style=welcomeLabel.getFont().getStyle();
 		String name=welcomeLabel.getFont().getName();
 		welcomeLabel.setFont(new Font(name,Font.BOLD,20));
-		welcomeLabel.setForeground(Color.red);
+		welcomeLabel.setForeground(Color.cyan);
+		welcomeLabel.setAlignmentX(CENTER_ALIGNMENT);
 		label1=new JLabel("This is a game in which you have to navigate a maze, but the maze moves!");
-		label2=new JLabel("Your player will be a blue circle. Navigate the maze using the arrow keys.");
+		label2=new JLabel("Your player will be a cyan circle. Navigate the maze using the arrow keys.");
 		label3=new JLabel("Be wary of the moving plates, because if one moves on top of you, you will fail the game!");
 		label4=new JLabel("Also steer clear of any orange monsters lurking about; they will kill you as well.");
 		label5=new JLabel("Try and reach the green square to win.\nAre you read? Let's play!");
 		
 		label1.setFont(new Font(name,Font.BOLD,14));
-		label1.setForeground(Color.red);
+		label1.setForeground(Color.cyan);
+		label1.setAlignmentX(CENTER_ALIGNMENT);
 		label2.setFont(new Font(name,Font.BOLD,14));
-		label2.setForeground(Color.red);
+		label2.setForeground(Color.cyan);
+		label2.setAlignmentX(CENTER_ALIGNMENT);
 		label3.setFont(new Font(name,Font.BOLD,14));
-		label3.setForeground(Color.red);
+		label3.setForeground(Color.cyan);
+		label3.setAlignmentX(CENTER_ALIGNMENT);
 		label4.setFont(new Font(name,Font.BOLD,14));
-		label4.setForeground(Color.red);
+		label4.setForeground(Color.cyan);
+		label4.setAlignmentX(CENTER_ALIGNMENT);
 		label5.setFont(new Font(name,Font.BOLD,14));
-		label5.setForeground(Color.red);
+		label5.setForeground(Color.cyan);
+		label5.setAlignmentX(CENTER_ALIGNMENT);
 		
 		panel.add(welcomeLabel);
 		panel.add(label1);
@@ -39,12 +45,18 @@ public class StartPage extends JFrame{
 		panel.add(label3);
 		panel.add(label4);
 		panel.add(label5);
-		panel.setBackground(Color.yellow);
+		panel.setBackground(Color.black);
 		
 		start=new JButton("Start");
 		start.addActionListener(new StartListener());
+		start.setAlignmentX(CENTER_ALIGNMENT);
+		start.setBackground(Color.black);
+		start.setForeground(Color.cyan);
 		quit=new JButton("Quit");
 		quit.addActionListener(new QuitListener());
+		quit.setAlignmentX(CENTER_ALIGNMENT);
+		quit.setBackground(Color.black);
+		quit.setForeground(Color.cyan);
 		
 		panel.add(start);
 		panel.add(quit);
@@ -52,7 +64,7 @@ public class StartPage extends JFrame{
 		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		this.setContentPane(panel);
 		this.pack();
-		this.setSize(300,300);
+		this.setSize(650,300);
 		this.setVisible(true);
 		
 	}

@@ -167,6 +167,8 @@ public abstract class Maze extends JPanel{
 			GridSpace position=current.getOccupiedSpot();
 			g2.fillRect(position.getX()*pixelConstant, position.getY()*pixelConstant, pixelConstant, pixelConstant);
 		}
+		g2.setColor(Color.green);
+		g2.fillRect(gameCompleteSpace().getX()*pixelConstant, gameCompleteSpace().getY()*pixelConstant,pixelConstant,pixelConstant);
 		
 	}
 	class TimerListener implements ActionListener{

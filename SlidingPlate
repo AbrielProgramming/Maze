@@ -116,7 +116,6 @@ public class SlidingPlate extends Plate {
 						space.editMovement(false);
 						space.editOccupiedBy(this);
 						}
-					System.out.println("new space "+space.getX()+" "+space.getY());
 					space=super.getGrid().getGridSpace(super.xStart()+movementStep, super.yStart());
 					editCovered(super.xStart()+movementStep+1, super.yStart());
 					if (space.getOccupiedBy()!=null && (space.getOccupiedBy()!=this || space.getOccupiedBy().getClass()==Plate.class)) {
@@ -141,9 +140,7 @@ public class SlidingPlate extends Plate {
 						space=super.getGrid().getGridSpace(super.xStart()+i, super.yStart()+movementStep);
 						if (space.getOccupiedBy()!=null && (space.getOccupiedBy()!=this || space.getOccupiedBy().getClass()==Plate.class)) {
 							//do nothing
-							System.out.println("did nothing on "+space.getX()+" "+space.getY());
 						} else {
-							System.out.println("overlapping plate "+space.getX()+" "+space.getY()+"\t occup by= "+space.getOccupiedBy().getClass().getName());
 							space.editMovement(true);
 							space.editOccupiedBy(null);
 						}

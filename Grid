@@ -43,10 +43,8 @@ public class Grid {
 		if (a.getClass()==SlidingPlate.class) {
 			for (GridSpace space: a.getSpacesCovered()) {
 				if (space.getOccupiedBy()!=null && space.getOccupiedBy().getClass()!=Plate.class) {
-					System.out.println("sliding plate occupiedBy at "+space.getX()+" "+space.getY());
 					a.setGridSpace(space.getX(), space.getY());
 				} else {
-					System.out.println("already occupiedBy plate at "+space.getX()+" "+space.getY());
 				}
 			}
 		} else {
@@ -69,7 +67,6 @@ public class Grid {
 			}
 		}
 		//monster movement needs to be checked
-		System.out.println("can't add");
 	}
 
 	public void addPlayer(Player ply) {
@@ -81,7 +78,6 @@ public class Grid {
 				return;
 			}
 		}
-		System.out.println("can't add");
 	}
 
 	public GridSpace getGridSpace(int i, int j) {

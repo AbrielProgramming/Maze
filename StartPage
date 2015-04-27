@@ -61,7 +61,7 @@ public class StartPage extends JFrame{
 		panel.add(start);
 		panel.add(quit);
 		
-		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setContentPane(panel);
 		this.pack();
 		this.setSize(650,300);

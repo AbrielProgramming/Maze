@@ -22,7 +22,7 @@ public abstract class Maze extends JPanel{
 		pixelConstant=(int)getPreferredSize().getWidth()/30;
 		setGrid();
 		setPlates();
-		timer=new Timer(500,new TimerListener());
+		timer=new Timer(800,new TimerListener());
 		timer.setInitialDelay(0);
 		timeTracker=new TrackTime();
 	}
@@ -39,8 +39,12 @@ public abstract class Maze extends JPanel{
 	abstract boolean platesRandom();
 	public void setPixelConstant(int newConstant){
 		pixelConstant=newConstant;
-		
 	}
+	public void pauseTimer(){
+		timeTracker.stopTiming();
+		timer.stop();
+	}
+	
 	public void startTimer(){
 		timer.start(); 
 		timeTracker.startTiming();
@@ -118,6 +122,7 @@ public abstract class Maze extends JPanel{
 			completed=true;
 			timeTracker.stopTiming();
 			String newBest=timeTracker.compareTimes(timeTracker.getTime(), bestTime);
+			
 			bestTime=newBest;
 			timeTracker.refreshTimer();
 		}

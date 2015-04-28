@@ -44,6 +44,9 @@ public abstract class Maze extends JPanel{
 		timeTracker.stopTiming();
 		timer.stop();
 	}
+	public void refreshTimer(){
+		timeTracker.refreshTimer();
+	}
 	
 	public void startTimer(){
 		timer.start(); 

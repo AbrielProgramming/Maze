@@ -69,6 +69,7 @@ public abstract class Maze extends JPanel{
 		completed=true;
 	}
 	public boolean isCompleted(){
+		//return true;
 		return completed;
 	}
 	public boolean isFailed(){

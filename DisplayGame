@@ -106,7 +106,6 @@ public class DisplayGame {
 		pause.setActionCommand("pause");
 		pause.addActionListener(new PauseListener());
 		pause.setFocusable(false);
-		String[] levels={"Level 1","Level 2","Level 3"};
 
 		level.setFocusable(false);
 
@@ -178,8 +177,15 @@ public class DisplayGame {
 	class LevelChoiceListener implements ActionListener{
 		public void actionPerformed(ActionEvent e){
 			String choice=(String)level.getSelectedItem();
+			boolean different=false;
+			if (!currentMaze.getLevel().equals(choice))
+				different=true;
 			if (choice.equals("Level 1")){
 				alreadyStarted=false;
+				if (different){
+					currentMaze.refreshTimer();
+					currentMaze.pauseTimer();
+				}
 				currentMaze=allMazes[0];
 				levelNum=0;
 				lastSelectedIndex=0;
@@ -187,6 +193,10 @@ public class DisplayGame {
 
 			}else if (choice.equals("Level 2")){
 				if (allMazes[0].isCompleted()){
+					if (different){
+						currentMaze.refreshTimer();
+						currentMaze.pauseTimer();
+					}
 					alreadyStarted=false;
 					currentMaze=allMazes[1];
 					levelNum=1;
@@ -198,6 +208,11 @@ public class DisplayGame {
 				}
 			}else if (choice.equals("Level 3")){
 				if (allMazes[1].isCompleted()){
+					if (different){
+
+						currentMaze.refreshTimer();
+						currentMaze.pauseTimer();
+					}
 					alreadyStarted=false;
 					currentMaze=allMazes[2];
 					levelNum=2;
@@ -217,22 +232,13 @@ public class DisplayGame {
 				currentMaze.startTimer();
 				alreadyStarted=true;
 			}
-			
+
 			String keyName=e.getKeyText(e.getKeyCode());
 			if (pause.getActionCommand().equals("pause")){
 				currentMaze.movePlayer(keyName);
 			}
 			if (currentMaze.gameComplete()){
 				if (currentMaze.getLevel().equals("Level 3")){
-					System.out.println("ja");
-					if (JOptionPane.YES_OPTION==JOptionPane.showConfirmDialog(null,"Congratulations, you won the 3rd level, and unlocked a Bonus! Would you like to try it?","Congratulations!", JOptionPane.YES_NO_OPTION)){
-						currentMaze=allMazes[3];
-						currentMaze.setPlayer(player);
-						lastSelectedIndex=3;
-						level.setSelectedIndex(lastSelectedIndex);
-					}else{
-						currentMaze.setPlayer(player);
-					}
 					alreadyStarted=false;
 					String[] levels={"Level 1","Level 2","Level 3","Bonus!"};
 					level=new JComboBox(levels);
@@ -240,9 +246,24 @@ public class DisplayGame {
 					level.setBackground(Color.white);
 					level.setMaximumSize( level.getPreferredSize() );
 					level.addActionListener(new LevelChoiceListener());
-					newLevelBox();
+					if (JOptionPane.YES_OPTION==JOptionPane.showConfirmDialog(null,"Congratulations, you won the 3rd level, and unlocked a Bonus! Would you like to try it?","Congratulations!", JOptionPane.YES_NO_OPTION)){
+						currentMaze=allMazes[3];
+						currentMaze.setPlayer(player);
+						lastSelectedIndex=3;
+						level.setSelectedIndex(lastSelectedIndex);
+						newLevelBox();
+					}else{
+						currentMaze.setPlayer(player);
+						level.setSelectedIndex(lastSelectedIndex);
+						initiateScreen();
+					}
+
+				
 				}else if (currentMaze.getLevel().equals("Bonus")){
 					JOptionPane.showMessageDialog(null, "Congratulations! You won the game!", "Game Won!", JOptionPane.INFORMATION_MESSAGE);
+					currentMaze.setPlayer(player);
+					alreadyStarted=false;
+					initiateScreen();
 
 				}else if (JOptionPane.YES_OPTION==JOptionPane.showConfirmDialog(null,"Congratulations, you won! Would you like to move on to the next level?","Congratulations!", JOptionPane.YES_NO_OPTION)){
 					alreadyStarted=false;
@@ -258,7 +279,7 @@ public class DisplayGame {
 					currentMaze.setPlayer(player);
 					initiateScreen();
 				}
-				
+
 
 			}
 		}

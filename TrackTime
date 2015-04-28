@@ -73,7 +73,7 @@ public class TrackTime {
 	public String compareTimes(String time1, String time2) {
 		int timeUno=toInt(time1);
 		int timeDos=toInt(time2);
-		if (timeUno>timeDos) {
+		if (timeUno<timeDos) {
 			return time1;
 		} else {
 			return time2;

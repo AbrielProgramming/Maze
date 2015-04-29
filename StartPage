@@ -14,7 +14,7 @@ public class StartPage extends JFrame{
 		welcomeLabel=new JLabel("Welcome to \n Labyrinth!");
 		int style=welcomeLabel.getFont().getStyle();
 		String name=welcomeLabel.getFont().getName();
-		welcomeLabel.setFont(new Font(name,Font.BOLD,20));
+		welcomeLabel.setFont(new Font("Ravie",Font.BOLD,20));
 		welcomeLabel.setForeground(Color.cyan);
 		welcomeLabel.setAlignmentX(CENTER_ALIGNMENT);
 		label1=new JLabel("This is a game in which you have to navigate a maze, but the maze moves!");
@@ -25,25 +25,25 @@ public class StartPage extends JFrame{
 		label6=new JLabel("Press any key to start the timer.");
 		label7=new JLabel("Are you ready? Let's play!");
 		
-		label1.setFont(new Font(name,Font.BOLD,14));
+		label1.setFont(new Font("Apple Chancery",Font.BOLD,14));
 		label1.setForeground(Color.cyan);
 		label1.setAlignmentX(CENTER_ALIGNMENT);
-		label2.setFont(new Font(name,Font.BOLD,14));
+		label2.setFont(new Font("Apple Chancery",Font.BOLD,14));
 		label2.setForeground(Color.cyan);
 		label2.setAlignmentX(CENTER_ALIGNMENT);
-		label3.setFont(new Font(name,Font.BOLD,14));
+		label3.setFont(new Font("Apple Chancery",Font.BOLD,14));
 		label3.setForeground(Color.cyan);
 		label3.setAlignmentX(CENTER_ALIGNMENT);
-		label4.setFont(new Font(name,Font.BOLD,14));
+		label4.setFont(new Font("Apple Chancery",Font.BOLD,14));
 		label4.setForeground(Color.cyan);
 		label4.setAlignmentX(CENTER_ALIGNMENT);
-		label5.setFont(new Font(name,Font.BOLD,14));
+		label5.setFont(new Font("Apple Chancery",Font.BOLD,14));
 		label5.setForeground(Color.cyan);
 		label5.setAlignmentX(CENTER_ALIGNMENT);
-		label6.setFont(new Font(name,Font.BOLD,14));
+		label6.setFont(new Font("Apple Chancery",Font.BOLD,14));
 		label6.setForeground(Color.cyan);
 		label6.setAlignmentX(CENTER_ALIGNMENT);
-		label7.setFont(new Font(name,Font.BOLD,14));
+		label7.setFont(new Font("Apple Chancery",Font.BOLD,14));
 		label7.setForeground(Color.cyan);
 		label7.setAlignmentX(CENTER_ALIGNMENT);
 		

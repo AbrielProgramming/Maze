@@ -148,9 +148,11 @@ public class DisplayGame {
 		gameTimer.start();
 	}
 	public void failedMaze(){
-		JOptionPane.showMessageDialog(null, "Sorry! You lost!", "Game Failed", JOptionPane.INFORMATION_MESSAGE);
 		currentMaze.setPlayer(player);
-
+		currentMaze.refreshTimer();
+		currentMaze.pauseTimer();
+		alreadyStarted=false;
+		JOptionPane.showMessageDialog(null, "Sorry! You lost!", "Game Failed", JOptionPane.INFORMATION_MESSAGE);
 	}
 	private void setBestTimes(boolean onBonus){
 		bestTimes=new JPanel();

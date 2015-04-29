@@ -5,7 +5,7 @@ import java.awt.event.*;
 public class StartPage extends JFrame{
 	JPanel panel;
 	JLabel welcomeLabel;
-	JLabel label1,label2,label3,label4, label5, label6;
+	JLabel label1,label2,label3,label4, label5, label6, label7;
 	JButton start;
 	JButton quit;
 	public StartPage(){
@@ -22,7 +22,8 @@ public class StartPage extends JFrame{
 		label3=new JLabel("Be wary of the moving plates, because if one moves on top of you, you will fail the game!");
 		label4=new JLabel("Also steer clear of any orange monsters lurking about; they will kill you as well.");
 		label5=new JLabel("Try and reach the green square to win.");
-		label6=new JLabel("Are you ready? Let's play!");
+		label6=new JLabel("Press any key to start the timer.");
+		label7=new JLabel("Are you ready? Let's play!");
 		
 		label1.setFont(new Font(name,Font.BOLD,14));
 		label1.setForeground(Color.cyan);
@@ -42,6 +43,9 @@ public class StartPage extends JFrame{
 		label6.setFont(new Font(name,Font.BOLD,14));
 		label6.setForeground(Color.cyan);
 		label6.setAlignmentX(CENTER_ALIGNMENT);
+		label7.setFont(new Font(name,Font.BOLD,14));
+		label7.setForeground(Color.cyan);
+		label7.setAlignmentX(CENTER_ALIGNMENT);
 		
 		panel.add(welcomeLabel);
 		panel.add(Box.createVerticalGlue());
@@ -56,6 +60,8 @@ public class StartPage extends JFrame{
 		panel.add(label5);
 		panel.add(Box.createVerticalGlue());
 		panel.add(label6);
+		panel.add(Box.createVerticalGlue());
+		panel.add(label7);
 		panel.add(Box.createVerticalGlue());
 
 		panel.setBackground(Color.black);

@@ -126,9 +126,7 @@ public abstract class Maze extends JPanel{
 			completed=true;
 			timeTracker.stopTiming();
 			String newBest=timeTracker.compareTimes(timeTracker.getTime(), bestTime);
-			
 			bestTime=newBest;
-			timeTracker.refreshTimer();
 		}
 		for (Monster monster : getMonsters()){
 			if (monster.getOccupiedSpot()==newSpace){

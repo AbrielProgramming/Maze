@@ -1,20 +1,46 @@
+import java.util.ArrayList;
 
-public class Level3 extends Maze {
 
+public class Level3 extends Maze{
+	private ArrayList<Plate> plates=new ArrayList();
+	private ArrayList<SlidingPlate> slidingPlates;
+	private ArrayList<Monster> monsters;
+	public Level3(DisplayGame game){
+		super(game);
+	}
+	public ArrayList<Monster> getMonsters(){
+		return monsters;
+	}
+	public boolean dark(){
+		return true;
+	}
+	public boolean platesRandom(){
+		return false;
+	}
+	public ArrayList<SlidingPlate> getSlidingPlates(){
+		return slidingPlates;
+	}
+	public ArrayList<Plate> getPlates(){
+		return plates;
+	}
+	public GridSpace gameCompleteSpace(){
+		return super.getGrid().getGridSpace(9, 9);
+	}
 	public void setPlates(){
-
+		plates=new ArrayList<Plate>();
+		slidingPlates=new ArrayList<SlidingPlate>();
+		monsters=new ArrayList<Monster>();
 	}
 	public int gridWidth(){
-		return 5;
+		return 10;
 	}
 	public int gridHeight(){
-		return 5;
+		return 10;
 	}
 	public String getLevel(){
 		return "Level 3";
 	}
 	public void addPlayer(Player toAdd){
-		setPlayer(toAdd);
 		toAdd.changeOccupiedSpot(new GridSpace(0,0));
 	}
 	public GridSpace playerStart(){

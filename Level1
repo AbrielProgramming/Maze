@@ -15,12 +15,15 @@ public class Level1 extends Maze{
 	public ArrayList<Plate> getPlates(){
 		return plates;
 	}
+	public boolean dark(){
+		return false;
+	}
 	public void setPlates(){
 		plates=new ArrayList<Plate>();
 		slidingPlates=new ArrayList<SlidingPlate>();
 		monsters=new ArrayList<Monster>();
 		
-		char[] monsterDirection={'u','d'};
+		char[] monsterDirection={'d','u'};
 		Monster newMonster=new Monster(super.getGrid(),super.getGrid().getGridSpace(5, 0),monsterDirection);
 		super.getGrid().addMonster(newMonster);
 		monsters.add(newMonster);

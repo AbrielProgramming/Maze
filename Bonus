@@ -8,6 +8,9 @@ public class Bonus extends Maze{
 	public Bonus(DisplayGame game){
 		super(game);
 	}
+	public boolean dark(){
+		return true;
+	}
 	public ArrayList<Monster> getMonsters(){
 		return monsters;
 	}

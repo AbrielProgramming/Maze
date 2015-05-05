@@ -1,4 +1,5 @@
 import java.awt.*;
+import java.awt.image.*;
 import javax.swing.*;
 
 import java.awt.event.*;
@@ -9,7 +10,7 @@ public class StartPage extends JFrame{
 	JButton start;
 	JButton quit;
 	public StartPage(){
-		panel=new JPanel();
+		panel=new ImagePanel();
 		panel.setLayout(new BoxLayout(panel,BoxLayout.Y_AXIS));
 		welcomeLabel=new JLabel("Welcome to \n Labyrinth!");
 		int style=welcomeLabel.getFont().getStyle();
@@ -63,8 +64,8 @@ public class StartPage extends JFrame{
 		panel.add(Box.createVerticalGlue());
 		panel.add(label7);
 		panel.add(Box.createVerticalGlue());
-
-		panel.setBackground(Color.black);
+		
+		//panel.setBackground(Color.black);
 		
 		start=new JButton("Start");
 		start.addActionListener(new StartListener());
@@ -79,11 +80,14 @@ public class StartPage extends JFrame{
 		
 		panel.add(start);
 		panel.add(quit);
+
+		
 		
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setContentPane(panel);
 		this.pack();
 		this.setSize(650,300);
+		this.setMaximumSize(new Dimension(650,300));
 		this.setVisible(true);
 		
 	}
@@ -97,8 +101,15 @@ public class StartPage extends JFrame{
 			System.exit(0);
 		}
 	}
+	class ImagePanel extends JPanel{
+		public void paintComponent(Graphics g){
+			Graphics2D g2=(Graphics2D)g;
+			ImageIcon img=new ImageIcon("Titlescreen.png");
+			Image backGround=img.getImage();
+			g2.drawImage(backGround, 0, 0, null);
+		}
+	}
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
 
 	}
 

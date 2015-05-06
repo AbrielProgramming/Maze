@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class Level1 extends Maze{
 	private ArrayList<Plate> plates;
 	private ArrayList<SlidingPlate> slidingPlates;
-	private ArrayList<Monster> monsters;
+	private ArrayList<AllMonsters> monsters;
 	public Level1(DisplayGame game){
 		super(game);
 	}
@@ -15,19 +15,20 @@ public class Level1 extends Maze{
 	public ArrayList<Plate> getPlates(){
 		return plates;
 	}
-	public boolean dark(){
-		return false;
-	}
 	public void setPlates(){
+		
 		plates=new ArrayList<Plate>();
 		slidingPlates=new ArrayList<SlidingPlate>();
-		monsters=new ArrayList<Monster>();
+		monsters=new ArrayList<AllMonsters>();
 		
 		char[] monsterDirection={'d','u'};
-		Monster newMonster=new Monster(super.getGrid(),super.getGrid().getGridSpace(5, 0),monsterDirection);
+		Monster newMonster=new Monster(super.getGrid(),super.getGrid().getGridSpace(3, 4),monsterDirection);
 		super.getGrid().addMonster(newMonster);
 		monsters.add(newMonster);
-		
+		//System.out.println(super.getPlayer().getName());
+		FollowMonster newMon2=new FollowMonster(super.getGrid(), super.getGrid().getGridSpace(5, 0), super.getGame().getPlayer());
+		super.getGrid().addMonster(newMon2);
+		monsters.add(newMon2);
 		
 		Plate trial=new Plate(super.getGrid(),3,4,20,"vertical");
 		super.getGrid().addPlate(trial);
@@ -42,7 +43,7 @@ public class Level1 extends Maze{
 	public boolean platesRandom(){
 		return true;
 	}
-	public ArrayList<Monster> getMonsters(){
+	public ArrayList<AllMonsters> getMonsters(){
 		
 		return monsters;
 	}
@@ -56,7 +57,7 @@ public class Level1 extends Maze{
 		return "Level 1";
 	}
 	public void addPlayer(Player toAdd){
-		toAdd.changeOccupiedSpot(new GridSpace(0,0));
+		toAdd.changeOccupiedSpot(super.getGrid().getGridSpace(0,0));
 	}
 	public GridSpace playerStart(){
 		return super.getGrid().getGridSpace(0,0);
@@ -65,9 +66,6 @@ public class Level1 extends Maze{
 		return super.getGrid().getGridSpace(29, 29);
 	}
 
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
-	}
 
 }
+

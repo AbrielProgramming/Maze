@@ -10,20 +10,27 @@ public class DisplayGame {
 	JPanel options;
 	JPanel mazePanel;
 	Timer gameTimer;
-	JButton instructions;
 	Maze currentMaze;
-	Maze[] allMazes={new Level1(this),new Level2(this),new Level3(this),new Bonus(this)};
+	Maze[] allMazes;
 	JButton pause;
 	JComboBox level;
 	int levelNum=0;
 	JLabel showTime;
-	Player player=new Player("Test Player");
+	Player player;
 	TrackTime timeTracker;
 	int lastSelectedIndex=0;
-	int fontSize=30;
+	int fontSize=15;
 	boolean alreadyStarted=false;
 	public DisplayGame(){
+		player=new Player("test2");
+		allMazes=new Maze[4];
+		allMazes[0]=new Level1(this);
+		allMazes[1]=new Level2(this);
+		allMazes[2]=new Level3(this);
+		allMazes[3]=new Bonus(this);
+
 		frame=new JFrame("Labyrinth");
+		System.out.println(player.getName());
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		currentMaze=allMazes[0];
 		initiateScreen();
@@ -44,24 +51,16 @@ public class DisplayGame {
 		pause.setActionCommand("pause");
 		pause.addActionListener(new PauseListener());
 		pause.setFocusable(false);
-		pause.setBackground(Color.yellow);
 		String[] levels={"Level 1","Level 2","Level 3"};
 		level=new JComboBox(levels);
 		level.setSelectedIndex(levelNum);
 		level.setAlignmentX(JFrame.LEFT_ALIGNMENT);
 		level.setBackground(Color.white);
-		level.setMaximumSize( new Dimension(150,30));
+		level.setMaximumSize( level.getPreferredSize() );
 		level.addActionListener(new LevelChoiceListener());
 		level.setAutoscrolls(true);
-		level.setBackground(Color.yellow);
 		level.setFocusable(false);
 
-		instructions=new JButton("Instructions");
-		instructions.setSize(100,100);
-		instructions.setBackground(Color.yellow);
-		instructions.addActionListener(new InstructListener());
-		instructions.setFocusable(false);
-		
 		timeTracker=new TrackTime();
 		showTime=new JLabel(currentMaze.getTime());
 		showTime.setForeground(Color.yellow);
@@ -69,7 +68,6 @@ public class DisplayGame {
 		String name=showTime.getFont().getName();
 		showTime.setFont(new Font(name,style,30));
 		options.add(showTime);
-		options.add(instructions);
 		options.add(pause);
 		options.add(level);
 
@@ -116,9 +114,9 @@ public class DisplayGame {
 		pause.setActionCommand("pause");
 		pause.addActionListener(new PauseListener());
 		pause.setFocusable(false);
-		pause.setBackground(Color.yellow);
+
 		level.setFocusable(false);
-		level.setBackground(Color.yellow);
+
 		timeTracker=new TrackTime();
 		showTime=new JLabel(currentMaze.getTime());
 		showTime.setForeground(Color.yellow);
@@ -163,6 +161,11 @@ public class DisplayGame {
 		currentMaze.pauseTimer();
 		alreadyStarted=false;
 		JOptionPane.showMessageDialog(null, "Sorry! You lost!", "Game Failed", JOptionPane.INFORMATION_MESSAGE);
+	}
+	
+	public Player getPlayer() {
+		//System.out.println(player.getName());
+		return player;
 	}
 	private void setBestTimes(boolean onBonus){
 		bestTimes=new JPanel();
@@ -215,11 +218,8 @@ public class DisplayGame {
 					lastSelectedIndex=1;
 					initiateScreen();
 				}else{
-					currentMaze.pauseTimer();
-					JOptionPane.showMessageDialog(null, "You must complete the previous level before moving on!", "Sorry!", JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(null, "You must compelete the previous level before moving on!", "Sorry!", JOptionPane.ERROR_MESSAGE);
 					level.setSelectedIndex(lastSelectedIndex);
-					if (alreadyStarted)
-						currentMaze.startTimer();
 				}
 			}else if (choice.equals("Level 3")){
 				if (allMazes[1].isCompleted()){
@@ -234,11 +234,8 @@ public class DisplayGame {
 					lastSelectedIndex=2;
 					initiateScreen();
 				}else{
-					currentMaze.pauseTimer();
-					JOptionPane.showMessageDialog(null, "You must complete the previous level before moving on!", "Sorry!", JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(null, "You must compelete the previous level before moving on!", "Sorry!", JOptionPane.ERROR_MESSAGE);
 					level.setSelectedIndex(lastSelectedIndex);
-					if (alreadyStarted)
-						currentMaze.startTimer();
 				}
 			}else{
 			}
@@ -273,7 +270,6 @@ public class DisplayGame {
 					}else{
 						currentMaze.setPlayer(player);
 						level.setSelectedIndex(lastSelectedIndex);
-						currentMaze.refreshTimer();
 						initiateScreen();
 					}
 
@@ -284,7 +280,7 @@ public class DisplayGame {
 					alreadyStarted=false;
 					initiateScreen();
 
-				}else if (JOptionPane.YES_OPTION==JOptionPane.showConfirmDialog(null,"Congratulations, you won! \nYour time: " + currentMaze.getTime() + "\nWould you like to move on to the next level?","Congratulations!", JOptionPane.YES_NO_OPTION)){
+				}else if (JOptionPane.YES_OPTION==JOptionPane.showConfirmDialog(null,"Congratulations, you won! Would you like to move on to the next level?","Congratulations!", JOptionPane.YES_NO_OPTION)){
 					alreadyStarted=false;
 					if (lastSelectedIndex<2){
 						currentMaze=allMazes[lastSelectedIndex+1];
@@ -296,7 +292,6 @@ public class DisplayGame {
 				}else{
 					alreadyStarted=false;
 					currentMaze.setPlayer(player);
-					currentMaze.refreshTimer();
 					initiateScreen();
 				}
 
@@ -323,13 +318,6 @@ public class DisplayGame {
 			}
 		}	
 	}
-	class InstructListener implements ActionListener{
-		public void actionPerformed(ActionEvent e){
-			currentMaze.pauseTimer();
-			new StartPage();
-			alreadyStarted=false;
-		}
-	}
 	public static void runGUI(){
 		JFrame.setDefaultLookAndFeelDecorated(true);
 		DisplayGame test=new DisplayGame();
@@ -344,3 +332,4 @@ public class DisplayGame {
 	}
 
 }
+

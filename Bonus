@@ -124,7 +124,6 @@ public class Bonus extends Maze{
 		monsters.add(new Monster(super.getGrid(),super.getGrid().getGridSpace(22, 5),monsterDirection));
 		monsters.add(new Monster(super.getGrid(),super.getGrid().getGridSpace(24, 5),monsterDirection));
 		monsters.add(new Monster(super.getGrid(),super.getGrid().getGridSpace(26, 5),monsterDirection));
-		monsters.add(new Monster(super.getGrid(),super.getGrid().getGridSpace(28, 5),monsterDirection));
 
 		for (AllMonsters monster : monsters){
 			super.getGrid().addMonster(monster);

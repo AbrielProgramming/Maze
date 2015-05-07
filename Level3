@@ -9,7 +9,7 @@ public class Level3 extends Maze {
 		super(game);
 	}
 	public boolean dark(){
-		return true;
+		return false;
 	}
 	public ArrayList<AllMonsters> getMonsters(){
 		return monsters;
@@ -30,12 +30,15 @@ public class Level3 extends Maze {
 		plates=new ArrayList<Plate>();
 		slidingPlates=new ArrayList<SlidingPlate>();
 		monsters=new ArrayList<AllMonsters>();
+		FollowMonster newMon2=new FollowMonster(super.getGrid(), super.getGrid().getGridSpace(5, 0), super.getGame().getPlayer());
+		super.getGrid().addMonster(newMon2);
+		monsters.add(newMon2);
 	}
 	public int gridWidth(){
-		return 5;
+		return 30;
 	}
 	public int gridHeight(){
-		return 5;
+		return 30;
 	}
 	public String getLevel(){
 		return "Level 3";

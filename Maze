@@ -33,6 +33,7 @@
 //DONT COMMIT OVER THIS
 //DONT COMMIT OVER THIS
 //DONT COMMIT OVER THIS
+
 import java.awt.Graphics;
 
 import javax.swing.JComponent;
@@ -50,7 +51,7 @@ public abstract class Maze extends JPanel{
 	private Graphics bufferGraphics;
 	private ArrayList<GridSpace> blockedSpaces;
 	private String bestTime="00:00";
-	private boolean completed=false;
+	private boolean completed=true;
 	private Player player;
 	private int pixelConstant=10;
 	private Timer timer;
@@ -85,6 +86,7 @@ public abstract class Maze extends JPanel{
 	abstract ArrayList<AllMonsters> getMonsters();
 	abstract boolean platesRandom();
 	abstract boolean dark();
+	abstract boolean monstersRandom();
 	public void setPixelConstant(int newConstant){
 		pixelConstant=newConstant;
 	}
@@ -154,19 +156,18 @@ public abstract class Maze extends JPanel{
 		return player.getOccupiedSpot().equals(gameCompleteSpace());
 	}
 	public void movePlayer(String direction){
-
 		GridSpace newSpace=player.getOccupiedSpot();
 		GridSpace currentSpace=player.getOccupiedSpot();
-		if (direction.equals("Left")){
+		if (direction.equals("←")){
 			if (currentSpace.getX()>0)
 				newSpace=grid.getGridSpace(currentSpace.getX()-1, currentSpace.getY());
-		}else if (direction.equals("Right")){
+		}else if (direction.equals("→")){
 			if (currentSpace.getX()<gridWidth()-1)
 				newSpace=grid.getGridSpace(currentSpace.getX()+1, currentSpace.getY());
-		}else if (direction.equals("Up")){
+		}else if (direction.equals("↑")){
 			if (currentSpace.getY()>0)
 				newSpace=grid.getGridSpace(currentSpace.getX(), currentSpace.getY()-1);
-		}else if (direction.equals("Down")){
+		}else if (direction.equals("↓")){
 			if (currentSpace.getY()<gridHeight()-1)
 				newSpace=grid.getGridSpace(currentSpace.getX(), currentSpace.getY()+1);
 		}else{
@@ -225,16 +226,26 @@ public abstract class Maze extends JPanel{
 
 		for (AllMonsters current : getMonsters()){
 			GridSpace position=current.getOccupiedSpot();
+			if (current.getClass().equals(FollowMonster.class)){
+				g2.setColor(Color.red);
+			}else
+				g2.setColor(Color.orange);
 			g2.fillRect(position.getX()*pixelConstant, position.getY()*pixelConstant, pixelConstant, pixelConstant);
 		}
 
 
-		bufferGraphics.setColor(Color.black);
+		
 		for (int counter=0;counter<gridWidth();counter++){
+			bufferGraphics.setColor(Color.black);
 			g2.drawLine(counter*pixelConstant, 0, counter*pixelConstant, gridHeight()*pixelConstant);
+			bufferGraphics.setColor(Color.red);
+			g2.drawString(counter + "", counter*pixelConstant, 10);
 		}
 		for (int counter=0;counter<gridHeight();counter++){
+			bufferGraphics.setColor(Color.black);
 			g2.drawLine(0,counter*pixelConstant,gridWidth()*pixelConstant,counter*pixelConstant);
+			bufferGraphics.setColor(Color.red);
+			g2.drawString(counter + "",0,counter*pixelConstant+10);
 		}
 		setSize(gridWidth()*pixelConstant,gridHeight()*pixelConstant);
 
@@ -256,14 +267,17 @@ public abstract class Maze extends JPanel{
 
 		g.drawImage(offscreen,0,0,this); 
 	}
+	public void setFailed(boolean newFail){
+		failed=newFail;
+	}
 	class TimerListener implements ActionListener{
 		public void actionPerformed(ActionEvent e){
 			for (AllMonsters current : getMonsters()){
 				current.move();
 				if (current.getOccupiedSpot()==player.getOccupiedSpot()&&!failed){
-					System.out.println(failed);
 					failed=true;
 					timeTracker.refreshTimer();
+					setPlates();
 					game.failedMaze();
 				}
 			}
@@ -274,6 +288,7 @@ public abstract class Maze extends JPanel{
 					if (current.getSpacesCovered()[counter]==player.getOccupiedSpot()){
 						failed=true;
 						timeTracker.refreshTimer();
+						setPlates();
 						game.failedMaze();
 					}
 				}

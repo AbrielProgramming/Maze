@@ -180,6 +180,7 @@ public abstract class Maze extends JPanel{
 		if (newSpace.equals(gameCompleteSpace())){
 			completed=true;
 			timeTracker.stopTiming();
+			timer.stop();
 			String newBest=timeTracker.compareTimes(timeTracker.getTime(), bestTime);
 			bestTime=newBest;
 		}

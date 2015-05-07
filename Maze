@@ -1,3 +1,38 @@
+
+//DONT COMMIT OVER THIS
+//DONT COMMIT OVER THIS
+//DONT COMMIT OVER THIS
+//DONT COMMIT OVER THIS
+//DONT COMMIT OVER THIS
+//DONT COMMIT OVER THIS
+//DONT COMMIT OVER THIS
+//DONT COMMIT OVER THIS
+//DONT COMMIT OVER THIS
+//DONT COMMIT OVER THIS
+//DONT COMMIT OVER THIS
+//DONT COMMIT OVER THIS
+//DONT COMMIT OVER THIS
+//DONT COMMIT OVER THIS
+//DONT COMMIT OVER THIS
+//DONT COMMIT OVER THIS
+//DONT COMMIT OVER THIS
+//DONT COMMIT OVER THIS
+//DONT COMMIT OVER THIS
+//DONT COMMIT OVER THIS
+//DONT COMMIT OVER THIS
+//DONT COMMIT OVER THIS
+//DONT COMMIT OVER THIS
+//DONT COMMIT OVER THIS
+//DONT COMMIT OVER THIS
+//DONT COMMIT OVER THIS
+//DONT COMMIT OVER THIS
+//DONT COMMIT OVER THIS
+//DONT COMMIT OVER THIS
+//DONT COMMIT OVER THIS
+//DONT COMMIT OVER THIS
+//DONT COMMIT OVER THIS
+//DONT COMMIT OVER THIS
+//DONT COMMIT OVER THIS
 import java.awt.Graphics;
 
 import javax.swing.JComponent;
@@ -49,10 +84,11 @@ public abstract class Maze extends JPanel{
 	abstract GridSpace playerStart();
 	abstract ArrayList<AllMonsters> getMonsters();
 	abstract boolean platesRandom();
+	abstract boolean dark();
 	public void setPixelConstant(int newConstant){
 		pixelConstant=newConstant;
 	}
-	
+
 	public DisplayGame getGame() {
 		return game;
 	}
@@ -63,7 +99,7 @@ public abstract class Maze extends JPanel{
 	public void refreshTimer(){
 		timeTracker.refreshTimer();
 	}
-	
+
 	public void startTimer(){
 		timer.start(); 
 		timeTracker.startTiming();
@@ -118,7 +154,7 @@ public abstract class Maze extends JPanel{
 		return player.getOccupiedSpot().equals(gameCompleteSpace());
 	}
 	public void movePlayer(String direction){
-		
+
 		GridSpace newSpace=player.getOccupiedSpot();
 		GridSpace currentSpace=player.getOccupiedSpot();
 		if (direction.equals("Left")){
@@ -139,15 +175,13 @@ public abstract class Maze extends JPanel{
 		if (!newSpace.getOccupied()){
 			player.changeOccupiedSpot(newSpace);
 
-	          repaint();
+			repaint();
 		}
 		if (newSpace.equals(gameCompleteSpace())){
 			completed=true;
 			timeTracker.stopTiming();
 			String newBest=timeTracker.compareTimes(timeTracker.getTime(), bestTime);
-			
 			bestTime=newBest;
-			timeTracker.refreshTimer();
 		}
 		for (AllMonsters monster : getMonsters()){
 			if (monster.getOccupiedSpot()==newSpace){
@@ -156,8 +190,8 @@ public abstract class Maze extends JPanel{
 				game.failedMaze();
 			}
 		}
-		
-		
+
+
 
 	}
 	public void paintComponent(Graphics g){
@@ -168,10 +202,10 @@ public abstract class Maze extends JPanel{
 		bufferGraphics.setColor(Color.yellow);
 		Graphics2D g2 = (Graphics2D) bufferGraphics;
 		g2.fillRect(0, 0, gridWidth()*pixelConstant, gridHeight()*pixelConstant);
-	    
+
 		g2.setColor(Color.green);
 		g2.fillRect(gameCompleteSpace().getX()*pixelConstant, gameCompleteSpace().getY()*pixelConstant,pixelConstant,pixelConstant);
-		
+
 		bufferGraphics.setColor(Color.black);
 		blockedSpaces=new ArrayList<GridSpace>();
 		if (getPlates().size()>0){
@@ -185,39 +219,39 @@ public abstract class Maze extends JPanel{
 			GridSpace current=blockedSpaces.get(counter);
 			g2.fillRect(current.getX()*pixelConstant, current.getY()*pixelConstant, pixelConstant, pixelConstant);
 		}
-		
-	     bufferGraphics.setColor(Color.orange);
-			
-			for (AllMonsters current : getMonsters()){
-				GridSpace position=current.getOccupiedSpot();
-				g2.fillRect(position.getX()*pixelConstant, position.getY()*pixelConstant, pixelConstant, pixelConstant);
-			}
-		
-			
+
+		bufferGraphics.setColor(Color.orange);
+
+		for (AllMonsters current : getMonsters()){
+			GridSpace position=current.getOccupiedSpot();
+			g2.fillRect(position.getX()*pixelConstant, position.getY()*pixelConstant, pixelConstant, pixelConstant);
+		}
+
+
 		bufferGraphics.setColor(Color.black);
 		for (int counter=0;counter<gridWidth();counter++){
 			g2.drawLine(counter*pixelConstant, 0, counter*pixelConstant, gridHeight()*pixelConstant);
 		}
 		for (int counter=0;counter<gridHeight();counter++){
-		g2.drawLine(0,counter*pixelConstant,gridWidth()*pixelConstant,counter*pixelConstant);
-	}
+			g2.drawLine(0,counter*pixelConstant,gridWidth()*pixelConstant,counter*pixelConstant);
+		}
 		setSize(gridWidth()*pixelConstant,gridHeight()*pixelConstant);
-		
-		
 
-		
-		Point2D center = new Point2D.Float((player.getOccupiedSpot().getX()*pixelConstant+5), (player.getOccupiedSpot().getY()*pixelConstant+5));
-	     float radius = 75;
-	     float[] dist = {0.1f, 0.3f, 1.0f};
-	     Color[] colors = {new Color(0,0,0,0), new Color(0,0,0,0), Color.black};
-	     RadialGradientPaint p =new RadialGradientPaint(center, radius, dist, colors);
-	 
-	     g2.setPaint(p);
-	     g2.fillRect(0, 0, gridWidth()*pixelConstant, gridHeight()*pixelConstant);
-	   
-		
-	     g2.setColor(Color.cyan);
-	     g2.fillOval(player.getOccupiedSpot().getX()*pixelConstant,player.getOccupiedSpot().getY()*pixelConstant,pixelConstant,pixelConstant);
+
+
+		if (dark()){
+			Point2D center = new Point2D.Float((player.getOccupiedSpot().getX()*pixelConstant+5), (player.getOccupiedSpot().getY()*pixelConstant+5));
+			float radius = 75;
+			float[] dist = {0.1f, 0.3f, 1.0f};
+			Color[] colors = {new Color(0,0,0,0), new Color(0,0,0,0), Color.black};
+			RadialGradientPaint p =new RadialGradientPaint(center, radius, dist, colors);
+
+			g2.setPaint(p);
+			g2.fillRect(0, 0, gridWidth()*pixelConstant, gridHeight()*pixelConstant);
+		}
+
+		g2.setColor(Color.cyan);
+		g2.fillOval(player.getOccupiedSpot().getX()*pixelConstant,player.getOccupiedSpot().getY()*pixelConstant,pixelConstant,pixelConstant);
 
 		g.drawImage(offscreen,0,0,this); 
 	}
@@ -244,8 +278,8 @@ public abstract class Maze extends JPanel{
 				}
 			}
 
-//testing
-	          repaint();
+			//testing
+			repaint();
 		}
 	}
 	public static void main(String[] args) {

@@ -29,19 +29,36 @@ public class Level1 extends Maze{
 		super.getGrid().addMonster(newMonster);
 		monsters.add(newMonster);
 		//System.out.println(super.getPlayer().getName());
-		FollowMonster newMon2=new FollowMonster(super.getGrid(), super.getGrid().getGridSpace(5, 0), super.getGame().getPlayer());
-		super.getGrid().addMonster(newMon2);
-		monsters.add(newMon2);
 		
-		Plate trial=new Plate(super.getGrid(),3,4,20,"vertical");
-		super.getGrid().addPlate(trial);
-		plates.add(trial);
+		
+		Plate p1=new Plate(super.getGrid(),3,4,20,"vertical");
+		plates.add(p1);
+		Plate p2=new Plate(super.getGrid(),0,4,10,"vertical");
+		plates.add(p2);
+		Plate p3=new Plate(super.getGrid(),1,4,5,"horizontal");
+		plates.add(p3);
+		Plate p4=new Plate(super.getGrid(),0,1,20,"horizontal");
+		plates.add(p4);
+		Plate p5=new Plate(super.getGrid(),6,4,5,"vertical");
+		plates.add(p5);
+//		Plate p6=new Plate(super.getGrid(),20,29,20,"horizontal");
+//		plates.add(p6);
+//		Plate p7=new Plate(super.getGrid(),29,15,5,"horizontal");
+//		plates.add(p7);
+//		Plate p8=new Plate(super.getGrid(),10,10,4,"vertical");
+//		plates.add(p8);
 		
 		SlidingPlate newPlate=new SlidingPlate(super.getGrid(),10,10,4,"horizontal",2,"vertical");
 		plates.add(newPlate);
 		slidingPlates.add(newPlate);
-		super.getGrid().addPlate(newPlate);
 		
+		
+		for (Plate plate : plates){
+			super.getGrid().addPlate(plate);
+		}
+		for (SlidingPlate splate : slidingPlates){
+			super.getGrid().addPlate(splate);
+		}
 	}
 	public boolean platesRandom(){
 		return true;

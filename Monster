@@ -1,3 +1,30 @@
+//DONT COMMIT OVER THIS
+//DONT COMMIT OVER THIS
+//DONT COMMIT OVER THIS
+//DONT COMMIT OVER THIS
+//DONT COMMIT OVER THIS
+//DONT COMMIT OVER THIS
+//DONT COMMIT OVER THIS
+//DONT COMMIT OVER THIS
+//DONT COMMIT OVER THIS
+//DONT COMMIT OVER THIS
+//DONT COMMIT OVER THIS
+//DONT COMMIT OVER THIS
+//DONT COMMIT OVER THIS
+//DONT COMMIT OVER THIS
+//DONT COMMIT OVER THIS
+//DONT COMMIT OVER THIS
+//DONT COMMIT OVER THIS
+//DONT COMMIT OVER THIS
+//DONT COMMIT OVER THIS
+//DONT COMMIT OVER THIS
+//DONT COMMIT OVER THIS
+//DONT COMMIT OVER THIS
+//DONT COMMIT OVER THIS
+//DONT COMMIT OVER THIS
+//DONT COMMIT OVER THIS
+//DONT COMMIT OVER THIS
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -51,7 +78,7 @@ public class Monster extends AllMonsters{
 			if (dir=='r') {
 				GridSpace newSpace=getGrid().getGridSpace(space.getX()+1, space.getY());
 				super.changeOccupiedSpot(newSpace);
-				if (newSpace.getOccupiedBy().getClass()!=Plate.class && newSpace.getOccupiedBy().getClass()!=SlidingPlate.class ) {
+				if (newSpace.getOccupiedBy()!=null&&newSpace.getOccupiedBy().getClass()!=Plate.class && newSpace.getOccupiedBy().getClass()!=SlidingPlate.class ) {
 					super.getOccupiedSpot().editMovement(false);
 					super.getOccupiedSpot().editOccupiedBy(this);
 				}
@@ -59,21 +86,21 @@ public class Monster extends AllMonsters{
 			} else if (dir=='l') {
 				super.changeOccupiedSpot(getGrid().getGridSpace(super.getOccupiedSpot().getX()-1, super.getOccupiedSpot().getY()));
 				GridSpace newSpace=super.getOccupiedSpot();
-				if (newSpace.getOccupiedBy().getClass()!=Plate.class && newSpace.getOccupiedBy().getClass()!=SlidingPlate.class ) {
+				if (newSpace.getOccupiedBy()!=null&&newSpace.getOccupiedBy().getClass()!=Plate.class && newSpace.getOccupiedBy().getClass()!=SlidingPlate.class ) {
 					super.getOccupiedSpot().editMovement(false);
 					super.getOccupiedSpot().editOccupiedBy(this);
 				}
 			} else if (dir=='u') {
 				super.changeOccupiedSpot(getGrid().getGridSpace(super.getOccupiedSpot().getX(), super.getOccupiedSpot().getY()-1));
 				GridSpace newSpace=super.getOccupiedSpot();
-				if (newSpace.getOccupiedBy().getClass()!=Plate.class && newSpace.getOccupiedBy().getClass()!=SlidingPlate.class ) {
+				if (newSpace.getOccupiedBy()!=null&&newSpace.getOccupiedBy().getClass()!=Plate.class && newSpace.getOccupiedBy().getClass()!=SlidingPlate.class ) {
 					super.getOccupiedSpot().editMovement(false);
 					super.getOccupiedSpot().editOccupiedBy(this);
 				}
 			} else if (dir=='d') {
 				super.changeOccupiedSpot(getGrid().getGridSpace(super.getOccupiedSpot().getX(), super.getOccupiedSpot().getY()+1));
 				GridSpace newSpace=super.getOccupiedSpot();
-				if (newSpace.getOccupiedBy().getClass()!=Plate.class && newSpace.getOccupiedBy().getClass()!=SlidingPlate.class ) {
+				if (newSpace.getOccupiedBy()!=null&&newSpace.getOccupiedBy().getClass()!=Plate.class && newSpace.getOccupiedBy().getClass()!=SlidingPlate.class ) {
 					super.getOccupiedSpot().editMovement(false);
 					super.getOccupiedSpot().editOccupiedBy(this);
 				}

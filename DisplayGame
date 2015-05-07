@@ -84,7 +84,7 @@ public class DisplayGame {
 		allMazes[1]=new Level2(this);
 		allMazes[2]=new Level3(this);
 		allMazes[3]=new Bonus(this);
-
+		
 		frame=new JFrame("Labyrinth");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		currentMaze=allMazes[0];
@@ -227,6 +227,7 @@ public class DisplayGame {
 		currentMaze.setPlayer(player);
 		currentMaze.refreshTimer();
 		currentMaze.pauseTimer();
+		currentMaze.setFailed(false);
 		alreadyStarted=false;
 		JOptionPane.showMessageDialog(null, "Sorry! You lost!", "Game Failed", JOptionPane.INFORMATION_MESSAGE);
 	}

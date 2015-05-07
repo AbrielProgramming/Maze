@@ -24,8 +24,8 @@ public class Level1 extends Maze{
 		slidingPlates=new ArrayList<SlidingPlate>();
 		monsters=new ArrayList<AllMonsters>();
 		
-		char[] monsterDirection={'d','u'};
-		Monster newMonster=new Monster(super.getGrid(),super.getGrid().getGridSpace(3, 4),monsterDirection);
+		char[] monsterDirection={'r','l'};
+		Monster newMonster=new Monster(super.getGrid(),super.getGrid().getGridSpace(28, 16),monsterDirection);
 		super.getGrid().addMonster(newMonster);
 		monsters.add(newMonster);
 		//System.out.println(super.getPlayer().getName());
@@ -40,18 +40,63 @@ public class Level1 extends Maze{
 		plates.add(new Plate(super.getGrid(),7,7,4,"horizontal"));
 		plates.add(new Plate(super.getGrid(),8,2,3,"vertical"));
 		
-		plates.add(new Plate(super.getGrid(),16,0,2,"horizontal"));
+		plates.add(new Plate(super.getGrid(),16,0,5,"horizontal"));
 		plates.add(new Plate(super.getGrid(),28,0,2,"horizontal"));
-//		plates.add(new Plate(super.getGrid(),7,7,4,"horizontal"));
-//		plates.add(new Plate(super.getGrid(),7,7,4,"horizontal"));
-//		plates.add(new Plate(super.getGrid(),7,7,4,"horizontal"));
-//		plates.add(new Plate(super.getGrid(),7,7,4,"horizontal"));
-//		plates.add(new Plate(super.getGrid(),7,7,4,"horizontal"));
-//		plates.add(new Plate(super.getGrid(),7,7,4,"horizontal"));
+		plates.add(new Plate(super.getGrid(),27,3,4,"vertical"));
+		plates.add(new Plate(super.getGrid(),25,3,6,"vertical"));
+		plates.add(new Plate(super.getGrid(),29,6,10,"vertical"));
+		plates.add(new Plate(super.getGrid(),27,8,15,"vertical"));
+		plates.add(new Plate(super.getGrid(),18,10,9,"horizontal"));
+		plates.add(new Plate(super.getGrid(),29,22,4,"vertical"));
+		
+		plates.add(new Plate(super.getGrid(),25,24,4,"horizontal"));
+		plates.add(new Plate(super.getGrid(),25,12,12,"vertical"));
+		plates.add(new Plate(super.getGrid(),10,2,4,"vertical"));
+		plates.add(new Plate(super.getGrid(),2,24,8,"horizontal"));
+		plates.add(new Plate(super.getGrid(),4,9,15,"vertical"));
+		plates.add(new Plate(super.getGrid(),12,1,10,"vertical"));
+		plates.add(new Plate(super.getGrid(),16,2,11,"vertical"));
+		plates.add(new Plate(super.getGrid(),14,13,3,"horizontal"));
+		plates.add(new Plate(super.getGrid(),14,10,3,"vertical"));
+		plates.add(new Plate(super.getGrid(),14,2,6,"vertical"));
+		plates.add(new Plate(super.getGrid(),6,8,5,"vertical"));
+		plates.add(new Plate(super.getGrid(),6,14,9,"vertical"));
+		plates.add(new Plate(super.getGrid(),23,11,2,"vertical"));
+		plates.add(new Plate(super.getGrid(),21,11,4,"vertical"));
+		plates.add(new Plate(super.getGrid(),22,14,3,"horizontal"));
+		plates.add(new Plate(super.getGrid(),7,16,15,"horizontal"));
+		plates.add(new Plate(super.getGrid(),11,17,10,"vertical"));
+		plates.add(new Plate(super.getGrid(),8,8,8,"vertical"));
+		plates.add(new Plate(super.getGrid(),9,28,20,"horizontal"));
+		plates.add(new Plate(super.getGrid(),8,25,4,"vertical"));
+		plates.add(new Plate(super.getGrid(),6,26,4,"vertical"));
+		plates.add(new Plate(super.getGrid(),21,26,9,"horizontal"));
+		plates.add(new Plate(super.getGrid(),20,20,9,"vertical"));
+		plates.add(new Plate(super.getGrid(),21,24,3,"horizontal"));
+		plates.add(new Plate(super.getGrid(),21,22,3,"horizontal"));
+		plates.add(new Plate(super.getGrid(),21,20,3,"horizontal"));
+		plates.add(new Plate(super.getGrid(),13,19,9,"vertical"));
+		plates.add(new Plate(super.getGrid(),15,17,9,"vertical"));
+//		plates.add(new Plate(super.getGrid(),6,14,9,"vertical"));
+//		plates.add(new Plate(super.getGrid(),6,14,9,"vertical"));
+//		plates.add(new Plate(super.getGrid(),6,14,9,"vertical"));
 
-		SlidingPlate s1=new SlidingPlate(super.getGrid(),9,1,20,"horizontal",1,"vertical");
+		SlidingPlate s1=new SlidingPlate(super.getGrid(),9,1,3,"horizontal",3,"horizontal");
 		plates.add(s1);
 		slidingPlates.add(s1);
+		
+		SlidingPlate s2=new SlidingPlate(super.getGrid(),0,22,2,"horizontal",2,"vertical");
+		plates.add(s2);
+		slidingPlates.add(s2);
+		
+		SlidingPlate s3=new SlidingPlate(super.getGrid(),17,2,7,"horizontal",2,"horizontal");
+		plates.add(s3);
+		slidingPlates.add(s3);
+		
+		SlidingPlate s4=new SlidingPlate(super.getGrid(),18,3,6,"vertical",1,"vertical");
+		plates.add(s4);
+		slidingPlates.add(s4);
+		
 		
 		SlidingPlate newPlate=new SlidingPlate(super.getGrid(),10,8,4,"horizontal",2,"vertical");
 		plates.add(newPlate);

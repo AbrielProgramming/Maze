@@ -1,18 +1,16 @@
-
-import java.awt.*;
 import java.util.ArrayList;
 
 
 public class Level2 extends Maze{
 	private ArrayList<Plate> plates;
 	private ArrayList<SlidingPlate> slidingPlates;
-	private ArrayList<Monster> monsters;
+	private ArrayList<AllMonsters> monsters;
 	
 	public Level2(DisplayGame game){
 		super(game);
 	}
 	public boolean dark(){
-		return true;
+		return false;
 	}
 	public ArrayList<SlidingPlate> getSlidingPlates(){
 		return slidingPlates;
@@ -23,16 +21,16 @@ public class Level2 extends Maze{
 	public void setPlates(){
 		plates=new ArrayList<Plate>();
 		slidingPlates=new ArrayList<SlidingPlate>();
-		monsters=new ArrayList<Monster>();
+		monsters=new ArrayList<AllMonsters>();
 		
 		char[] monsterDirection={'d', 'd', 'l', 'l', 'd', 'u', 'r', 'r', 'u','u'};
 		Monster newMonster=new Monster(super.getGrid(),super.getGrid().getGridSpace(5, 0),monsterDirection);
 		super.getGrid().addMonster(newMonster);
 		monsters.add(newMonster);
-		char[] monsterDirection2={'d', 'l', 'd', 'l', 'd', 'l', 'r', 'u', 'r','u', 'r', 'u'};
-		Monster newMonster2=new Monster(super.getGrid(),super.getGrid().getGridSpace(19, 25),monsterDirection2);
-		super.getGrid().addMonster(newMonster2);
-		monsters.add(newMonster2);
+//		char[] monsterDirection2={'d', 'l', 'd', 'l', 'd', 'l', 'r', 'u', 'r','u', 'r', 'u'};
+//		Monster newMonster2=new Monster(super.getGrid(),super.getGrid().getGridSpace(19, 25),monsterDirection2);
+//		super.getGrid().addMonster(newMonster2);
+//		monsters.add(newMonster2);
 		
 		Plate trial=new Plate(super.getGrid(),10,9,20,"vertical");
 		super.getGrid().addPlate(trial);
@@ -89,7 +87,7 @@ public class Level2 extends Maze{
 	public boolean platesRandom(){
 		return true;
 	}
-	public ArrayList<Monster> getMonsters(){
+	public ArrayList<AllMonsters> getMonsters(){
 		
 		return monsters;
 	}

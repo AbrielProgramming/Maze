@@ -4,14 +4,14 @@ import java.util.ArrayList;
 public class Bonus extends Maze{
 	private ArrayList<Plate> plates=new ArrayList();
 	private ArrayList<SlidingPlate> slidingPlates;
-	private ArrayList<Monster> monsters;
+	private ArrayList<AllMonsters> monsters;
 	public Bonus(DisplayGame game){
 		super(game);
 	}
 	public boolean dark(){
 		return true;
 	}
-	public ArrayList<Monster> getMonsters(){
+	public ArrayList<AllMonsters> getMonsters(){
 		return monsters;
 	}
 	public boolean platesRandom(){
@@ -29,7 +29,7 @@ public class Bonus extends Maze{
 	public void setPlates(){
 		plates=new ArrayList<Plate>();
 		slidingPlates=new ArrayList<SlidingPlate>();
-		monsters=new ArrayList<Monster>();
+		monsters=new ArrayList<AllMonsters>();
 	}
 	public int gridWidth(){
 		return 30;

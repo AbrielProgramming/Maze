@@ -9,7 +9,7 @@ public class Bonus extends Maze{
 		super(game);
 	}
 	public boolean dark(){
-		return true;
+		return false;
 	}
 	public ArrayList<AllMonsters> getMonsters(){
 		return monsters;
@@ -24,18 +24,123 @@ public class Bonus extends Maze{
 		return plates;
 	}
 	public GridSpace gameCompleteSpace(){
-		return super.getGrid().getGridSpace(29, 29);
+		return super.getGrid().getGridSpace(29, 5);
 	}
 	public void setPlates(){
 		plates=new ArrayList<Plate>();
 		slidingPlates=new ArrayList<SlidingPlate>();
 		monsters=new ArrayList<AllMonsters>();
+
+		char[] monsterDirection=new char[2];
+		monsterDirection[0]='u';
+		monsterDirection[1]='d';
+		monsters.add(new Monster(super.getGrid(),super.getGrid().getGridSpace(0, 1),monsterDirection));
+		monsters.add(new Monster(super.getGrid(),super.getGrid().getGridSpace(2, 1),monsterDirection));
+		monsters.add(new Monster(super.getGrid(),super.getGrid().getGridSpace(4, 1),monsterDirection));
+		monsters.add(new Monster(super.getGrid(),super.getGrid().getGridSpace(6, 1),monsterDirection));
+		monsters.add(new Monster(super.getGrid(),super.getGrid().getGridSpace(8, 1),monsterDirection));
+		monsters.add(new Monster(super.getGrid(),super.getGrid().getGridSpace(10, 1),monsterDirection));
+		monsters.add(new Monster(super.getGrid(),super.getGrid().getGridSpace(12, 1),monsterDirection));
+		monsters.add(new Monster(super.getGrid(),super.getGrid().getGridSpace(14, 1),monsterDirection));
+		monsters.add(new Monster(super.getGrid(),super.getGrid().getGridSpace(16, 1),monsterDirection));
+		monsters.add(new Monster(super.getGrid(),super.getGrid().getGridSpace(18, 1),monsterDirection));
+		monsters.add(new Monster(super.getGrid(),super.getGrid().getGridSpace(20, 1),monsterDirection));
+		monsters.add(new Monster(super.getGrid(),super.getGrid().getGridSpace(22, 1),monsterDirection));
+		monsters.add(new Monster(super.getGrid(),super.getGrid().getGridSpace(24, 1),monsterDirection));
+		monsters.add(new Monster(super.getGrid(),super.getGrid().getGridSpace(26, 1),monsterDirection));
+		monsters.add(new Monster(super.getGrid(),super.getGrid().getGridSpace(28, 1),monsterDirection));
+
+		monsterDirection=new char[2];
+		monsterDirection[0]='l';
+		monsterDirection[1]='r';
+		monsters.add(new Monster(super.getGrid(),super.getGrid().getGridSpace(1, 2),monsterDirection));
+		monsters.add(new Monster(super.getGrid(),super.getGrid().getGridSpace(3, 2),monsterDirection));
+		monsters.add(new Monster(super.getGrid(),super.getGrid().getGridSpace(5, 2),monsterDirection));
+		monsters.add(new Monster(super.getGrid(),super.getGrid().getGridSpace(7, 2),monsterDirection));
+		monsters.add(new Monster(super.getGrid(),super.getGrid().getGridSpace(9, 2),monsterDirection));
+		monsters.add(new Monster(super.getGrid(),super.getGrid().getGridSpace(11, 2),monsterDirection));
+		monsters.add(new Monster(super.getGrid(),super.getGrid().getGridSpace(13, 2),monsterDirection));
+		monsters.add(new Monster(super.getGrid(),super.getGrid().getGridSpace(15, 2),monsterDirection));
+		monsters.add(new Monster(super.getGrid(),super.getGrid().getGridSpace(17, 2),monsterDirection));
+		monsters.add(new Monster(super.getGrid(),super.getGrid().getGridSpace(19, 2),monsterDirection));
+		monsters.add(new Monster(super.getGrid(),super.getGrid().getGridSpace(21, 2),monsterDirection));
+		monsters.add(new Monster(super.getGrid(),super.getGrid().getGridSpace(23, 2),monsterDirection));
+		monsters.add(new Monster(super.getGrid(),super.getGrid().getGridSpace(25, 2),monsterDirection));
+		monsters.add(new Monster(super.getGrid(),super.getGrid().getGridSpace(27, 2),monsterDirection));
+		monsters.add(new Monster(super.getGrid(),super.getGrid().getGridSpace(29, 2),monsterDirection));
+
+		monsterDirection=new char[2];
+		monsterDirection[0]='u';
+		monsterDirection[1]='d';
+		monsters.add(new Monster(super.getGrid(),super.getGrid().getGridSpace(0, 3),monsterDirection));
+		monsters.add(new Monster(super.getGrid(),super.getGrid().getGridSpace(2, 3),monsterDirection));
+		monsters.add(new Monster(super.getGrid(),super.getGrid().getGridSpace(4, 3),monsterDirection));
+		monsters.add(new Monster(super.getGrid(),super.getGrid().getGridSpace(6, 3),monsterDirection));
+		monsters.add(new Monster(super.getGrid(),super.getGrid().getGridSpace(8, 3),monsterDirection));
+		monsters.add(new Monster(super.getGrid(),super.getGrid().getGridSpace(10, 3),monsterDirection));
+		monsters.add(new Monster(super.getGrid(),super.getGrid().getGridSpace(12, 3),monsterDirection));
+		monsters.add(new Monster(super.getGrid(),super.getGrid().getGridSpace(14, 3),monsterDirection));
+		monsters.add(new Monster(super.getGrid(),super.getGrid().getGridSpace(16, 3),monsterDirection));
+		monsters.add(new Monster(super.getGrid(),super.getGrid().getGridSpace(18, 3),monsterDirection));
+		monsters.add(new Monster(super.getGrid(),super.getGrid().getGridSpace(20, 3),monsterDirection));
+		monsters.add(new Monster(super.getGrid(),super.getGrid().getGridSpace(22, 3),monsterDirection));
+		monsters.add(new Monster(super.getGrid(),super.getGrid().getGridSpace(24, 3),monsterDirection));
+		monsters.add(new Monster(super.getGrid(),super.getGrid().getGridSpace(26, 3),monsterDirection));
+		monsters.add(new Monster(super.getGrid(),super.getGrid().getGridSpace(28, 3),monsterDirection));
+
+		monsterDirection=new char[2];
+		monsterDirection[0]='l';
+		monsterDirection[1]='r';
+		monsters.add(new Monster(super.getGrid(),super.getGrid().getGridSpace(1, 4),monsterDirection));
+		monsters.add(new Monster(super.getGrid(),super.getGrid().getGridSpace(3, 4),monsterDirection));
+		monsters.add(new Monster(super.getGrid(),super.getGrid().getGridSpace(5, 4),monsterDirection));
+		monsters.add(new Monster(super.getGrid(),super.getGrid().getGridSpace(7, 4),monsterDirection));
+		monsters.add(new Monster(super.getGrid(),super.getGrid().getGridSpace(9, 4),monsterDirection));
+		monsters.add(new Monster(super.getGrid(),super.getGrid().getGridSpace(11, 4),monsterDirection));
+		monsters.add(new Monster(super.getGrid(),super.getGrid().getGridSpace(13, 4),monsterDirection));
+		monsters.add(new Monster(super.getGrid(),super.getGrid().getGridSpace(15, 4),monsterDirection));
+		monsters.add(new Monster(super.getGrid(),super.getGrid().getGridSpace(17, 4),monsterDirection));
+		monsters.add(new Monster(super.getGrid(),super.getGrid().getGridSpace(19, 4),monsterDirection));
+		monsters.add(new Monster(super.getGrid(),super.getGrid().getGridSpace(21, 4),monsterDirection));
+		monsters.add(new Monster(super.getGrid(),super.getGrid().getGridSpace(23, 4),monsterDirection));
+		monsters.add(new Monster(super.getGrid(),super.getGrid().getGridSpace(25, 4),monsterDirection));
+		monsters.add(new Monster(super.getGrid(),super.getGrid().getGridSpace(27, 4),monsterDirection));
+		monsters.add(new Monster(super.getGrid(),super.getGrid().getGridSpace(29, 4),monsterDirection));
+		monsters.add(new FollowMonster(super.getGrid(), super.getGrid().getGridSpace(28, 5), super.getGame().getPlayer()));
+		monsterDirection=new char[2];
+		monsterDirection[0]='u';
+		monsterDirection[1]='d';
+		monsters.add(new Monster(super.getGrid(),super.getGrid().getGridSpace(0, 5),monsterDirection));
+		monsters.add(new Monster(super.getGrid(),super.getGrid().getGridSpace(2, 5),monsterDirection));
+		monsters.add(new Monster(super.getGrid(),super.getGrid().getGridSpace(4, 5),monsterDirection));
+		monsters.add(new Monster(super.getGrid(),super.getGrid().getGridSpace(6, 5),monsterDirection));
+		monsters.add(new Monster(super.getGrid(),super.getGrid().getGridSpace(8, 5),monsterDirection));
+		monsters.add(new Monster(super.getGrid(),super.getGrid().getGridSpace(10, 5),monsterDirection));
+		monsters.add(new Monster(super.getGrid(),super.getGrid().getGridSpace(12, 5),monsterDirection));
+		monsters.add(new Monster(super.getGrid(),super.getGrid().getGridSpace(14, 5),monsterDirection));
+		monsters.add(new Monster(super.getGrid(),super.getGrid().getGridSpace(16, 5),monsterDirection));
+		monsters.add(new Monster(super.getGrid(),super.getGrid().getGridSpace(18, 5),monsterDirection));
+		monsters.add(new Monster(super.getGrid(),super.getGrid().getGridSpace(20, 5),monsterDirection));
+		monsters.add(new Monster(super.getGrid(),super.getGrid().getGridSpace(22, 5),monsterDirection));
+		monsters.add(new Monster(super.getGrid(),super.getGrid().getGridSpace(24, 5),monsterDirection));
+		monsters.add(new Monster(super.getGrid(),super.getGrid().getGridSpace(26, 5),monsterDirection));
+		monsters.add(new Monster(super.getGrid(),super.getGrid().getGridSpace(28, 5),monsterDirection));
+
+		for (AllMonsters monster : monsters){
+			super.getGrid().addMonster(monster);
+		}
+
+
+
 	}
 	public int gridWidth(){
 		return 30;
 	}
 	public int gridHeight(){
-		return 30;
+		return 6;
+	}
+	public boolean monstersRandom(){
+		return true;
 	}
 	public String getLevel(){
 		return "Bonus";

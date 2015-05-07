@@ -15,6 +15,9 @@ public class Level1 extends Maze{
 	public ArrayList<Plate> getPlates(){
 		return plates;
 	}
+	public boolean dark(){
+		return false;
+	}
 	public void setPlates(){
 		
 		plates=new ArrayList<Plate>();

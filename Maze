@@ -35,6 +35,7 @@
 //DONT COMMIT OVER THIS
 
 
+
 import java.awt.Graphics;
 
 import javax.swing.JComponent;
@@ -52,7 +53,7 @@ public abstract class Maze extends JPanel{
 	private Graphics bufferGraphics;
 	private ArrayList<GridSpace> blockedSpaces;
 	private String bestTime="00:00";
-	private boolean completed=false;
+	private boolean completed=true;
 	private Player player;
 	private int pixelConstant=10;
 	private Timer timer;
@@ -206,9 +207,7 @@ public abstract class Maze extends JPanel{
 		Graphics2D g2 = (Graphics2D) bufferGraphics;
 		g2.fillRect(0, 0, gridWidth()*pixelConstant, gridHeight()*pixelConstant);
 
-		g2.setColor(Color.green);
-		g2.fillRect(gameCompleteSpace().getX()*pixelConstant, gameCompleteSpace().getY()*pixelConstant,pixelConstant,pixelConstant);
-
+		
 		bufferGraphics.setColor(Color.black);
 		blockedSpaces=new ArrayList<GridSpace>();
 		if (getPlates().size()>0){
@@ -236,18 +235,18 @@ public abstract class Maze extends JPanel{
 
 
 		
-		for (int counter=0;counter<gridWidth();counter++){
-			bufferGraphics.setColor(Color.black);
-			g2.drawLine(counter*pixelConstant, 0, counter*pixelConstant, gridHeight()*pixelConstant);
-			bufferGraphics.setColor(Color.red);
-			g2.drawString(counter + "", counter*pixelConstant, 10);
-		}
-		for (int counter=0;counter<gridHeight();counter++){
-			bufferGraphics.setColor(Color.black);
-			g2.drawLine(0,counter*pixelConstant,gridWidth()*pixelConstant,counter*pixelConstant);
-			bufferGraphics.setColor(Color.red);
-			g2.drawString(counter + "",0,counter*pixelConstant+10);
-		}
+//		for (int counter=0;counter<gridWidth();counter++){
+//			bufferGraphics.setColor(Color.black);
+//			g2.drawLine(counter*pixelConstant, 0, counter*pixelConstant, gridHeight()*pixelConstant);
+//			bufferGraphics.setColor(Color.red);
+//			g2.drawString(counter + "", counter*pixelConstant, 10);
+//		}
+//		for (int counter=0;counter<gridHeight();counter++){
+//			bufferGraphics.setColor(Color.black);
+//			g2.drawLine(0,counter*pixelConstant,gridWidth()*pixelConstant,counter*pixelConstant);
+//			bufferGraphics.setColor(Color.red);
+//			g2.drawString(counter + "",0,counter*pixelConstant+10);
+//		}
 		setSize(gridWidth()*pixelConstant,gridHeight()*pixelConstant);
 
 
@@ -265,6 +264,8 @@ public abstract class Maze extends JPanel{
 
 		g2.setColor(Color.cyan);
 		g2.fillOval(player.getOccupiedSpot().getX()*pixelConstant,player.getOccupiedSpot().getY()*pixelConstant,pixelConstant,pixelConstant);
+		g2.setColor(Color.green);
+		g2.fillRect(gameCompleteSpace().getX()*pixelConstant, gameCompleteSpace().getY()*pixelConstant,pixelConstant,pixelConstant);
 
 		g.drawImage(offscreen,0,0,this); 
 	}

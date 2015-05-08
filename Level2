@@ -85,7 +85,10 @@ public class Level2 extends Maze{
 		
 	}
 	public boolean platesRandom(){
-		return true;
+		return false;
+	}
+	public boolean monstersRandom(){
+		return false;
 	}
 	public ArrayList<AllMonsters> getMonsters(){
 		

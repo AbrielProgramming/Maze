@@ -1,4 +1,3 @@
-
 public class Plate {
 	private int xStart;
 	private int yStart;
@@ -84,3 +83,4 @@ public class Plate {
 		return grid;
 	}
 }
+

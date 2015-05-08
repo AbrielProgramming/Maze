@@ -34,6 +34,7 @@
 //DONT COMMIT OVER THIS
 //DONT COMMIT OVER THIS
 
+
 import java.awt.Graphics;
 
 import javax.swing.JComponent;
@@ -189,7 +190,7 @@ public abstract class Maze extends JPanel{
 			if (monster.getOccupiedSpot()==newSpace){
 				failed=true;
 				timeTracker.refreshTimer();
-				game.failedMaze();
+				game.failedMaze("monster");
 			}
 		}
 
@@ -277,8 +278,7 @@ public abstract class Maze extends JPanel{
 				if (current.getOccupiedSpot()==player.getOccupiedSpot()&&!failed){
 					failed=true;
 					timeTracker.refreshTimer();
-					setPlates();
-					game.failedMaze();
+					game.failedMaze("monster");
 				}
 			}
 			for (SlidingPlate current : getSlidingPlates()){
@@ -288,8 +288,7 @@ public abstract class Maze extends JPanel{
 					if (current.getSpacesCovered()[counter]==player.getOccupiedSpot()){
 						failed=true;
 						timeTracker.refreshTimer();
-						setPlates();
-						game.failedMaze();
+						game.failedMaze("plate");
 					}
 				}
 			}

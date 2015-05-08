@@ -1,0 +1,285 @@
+
+import java.awt.Graphics;
+
+import javax.swing.JComponent;
+import javax.swing.Timer;
+import java.sql.*;
+import java.awt.event.*;
+import java.awt.geom.Point2D;
+import java.util.*;
+
+import javax.swing.*;
+import java.awt.*;
+public abstract class Maze extends JPanel{
+	private Grid grid;
+	private Image offscreen;
+	private Graphics bufferGraphics;
+	private ArrayList<GridSpace> blockedSpaces;
+	private String bestTime="00:00";
+	private boolean completed=true;
+	private Player player;
+	private int pixelConstant=10;
+	private Timer timer;
+	private boolean failed=false;
+	private DisplayGame game;
+	private TrackTime timeTracker;
+	public Maze(DisplayGame game){
+		this.game=game;
+		//player=new Player("Test Player");
+		//game.setPlayer(player);
+
+		player=game.getPlayer();
+
+		setPreferredSize(new Dimension(300,300));
+		pixelConstant=(int)getPreferredSize().getWidth()/30;
+		setGrid();
+		setPlates();
+		timer=new Timer(800,new TimerListener());
+		timer.setInitialDelay(0);
+		timeTracker=new TrackTime();
+
+	}
+	abstract ArrayList<Plate> getPlates();
+	abstract ArrayList<SlidingPlate> getSlidingPlates();
+	abstract void setPlates();
+	abstract int gridWidth();
+	abstract int gridHeight();
+	abstract String getLevel();
+	abstract GridSpace gameCompleteSpace();
+	abstract void addPlayer(Player toAdd);
+	abstract GridSpace playerStart();
+	abstract ArrayList<AllMonsters> getMonsters();
+	abstract boolean platesRandom();
+	abstract boolean dark();
+	abstract int light();
+	abstract boolean monstersRandom();
+	public void setPixelConstant(int newConstant){
+		pixelConstant=newConstant;
+	}
+
+	public DisplayGame getGame() {
+		return game;
+	}
+	
+	public void refreshGrid() {
+//		for (GridSpace[] spaces: grid.getGrid()) {
+//			for (GridSpace space:spaces) {
+//				space.editMovement(true);
+//				space.editOccupiedBy(null);
+//			}
+//		}
+		setGrid();
+		setPlates();
+
+	}
+	public void pauseTimer(){
+		timeTracker.stopTiming();
+		timer.stop();
+	}
+	public void refreshTimer(){
+		timeTracker.refreshTimer();
+	}
+
+	public void startTimer(){
+		timer.start(); 
+		timeTracker.startTiming();
+	}
+	public void restartTimer(){
+		timeTracker.startTiming();
+	}
+	public String getTime(){
+		return timeTracker.getTime();
+	}
+	public int getPixelConstant(){
+		return pixelConstant;
+	}
+	public Player getPlayer(){
+		return player;
+	}
+	public void setPlayer(Player newPlayer){
+		player=newPlayer;
+		addPlayer(player);
+	}
+	public void completeLevel(){
+		completed=true;
+	}
+	public boolean isCompleted(){
+		//return true;
+		return completed;
+	}
+	public boolean isFailed(){
+		return failed;
+	}
+	public void update(Graphics g) {
+		paint(g);
+	}
+	public String getBestTime(){
+		return bestTime;
+	}
+	public Grid getGrid(){
+		return grid;
+	}
+	private void setGrid(){
+		grid=new Grid(gridWidth(),gridHeight());
+
+	}
+	private void addPlateToGrid(Plate toAdd){
+		getPlates().add(toAdd);
+
+	}
+	private int numPlates(){
+		return getPlates().size();
+	}
+	public boolean gameComplete(){
+		return player.getOccupiedSpot().equals(gameCompleteSpace());
+	}
+	public void movePlayer(String direction){
+		GridSpace newSpace=player.getOccupiedSpot();
+		GridSpace currentSpace=player.getOccupiedSpot();
+		if (direction.equals("Left")){
+			if (currentSpace.getX()>0)
+				newSpace=grid.getGridSpace(currentSpace.getX()-1, currentSpace.getY());
+		}else if (direction.equals("Right")){
+			if (currentSpace.getX()<gridWidth()-1)
+				newSpace=grid.getGridSpace(currentSpace.getX()+1, currentSpace.getY());
+		}else if (direction.equals("Up")){
+			if (currentSpace.getY()>0)
+				newSpace=grid.getGridSpace(currentSpace.getX(), currentSpace.getY()-1);
+		}else if (direction.equals("Down")){
+			if (currentSpace.getY()<gridHeight()-1)
+				newSpace=grid.getGridSpace(currentSpace.getX(), currentSpace.getY()+1);
+		}else{
+			newSpace=player.getOccupiedSpot();
+		}
+		if (!newSpace.getOccupied()){
+			player.changeOccupiedSpot(newSpace);
+
+			repaint();
+		} else {
+			System.out.println("currently occupied by "+newSpace.getOccupiedBy().getClass().toString());
+		}
+		if (newSpace.equals(gameCompleteSpace())){
+			completed=true;
+			timeTracker.stopTiming();
+			timer.stop();
+			String newBest=timeTracker.compareTimes(timeTracker.getTime(), bestTime);
+			bestTime=newBest;
+		}
+		for (AllMonsters monster : getMonsters()){
+			if (monster.getOccupiedSpot()==newSpace){
+				failed=true;
+				timeTracker.refreshTimer();
+				game.failedMaze();
+			}
+		}
+
+
+
+	}
+	public void paintComponent(Graphics g){
+		offscreen = createImage(gridWidth()*pixelConstant,gridHeight()*pixelConstant); 
+		bufferGraphics=offscreen.getGraphics();
+		bufferGraphics.clearRect(0,0,gridWidth()*pixelConstant,gridHeight()*pixelConstant); 
+		//Graphics2D g2=(Graphics2D)g;
+		bufferGraphics.setColor(Color.gray);
+		Graphics2D g2 = (Graphics2D) bufferGraphics;
+		g2.fillRect(0, 0, gridWidth()*pixelConstant, gridHeight()*pixelConstant);
+
+		g2.setColor(Color.green);
+		g2.fillRect(gameCompleteSpace().getX()*pixelConstant, gameCompleteSpace().getY()*pixelConstant,pixelConstant,pixelConstant);
+
+		bufferGraphics.setColor(Color.black);
+		blockedSpaces=new ArrayList<GridSpace>();
+		if (getPlates().size()>0){
+			for (Plate current : getPlates()){
+				for (int counter=0;counter<current.getSpacesCovered().length;counter++){
+					blockedSpaces.add(current.getSpacesCovered()[counter]);
+				}
+			}
+		}
+		for (int counter=0;counter<blockedSpaces.size();counter++){
+			GridSpace current=blockedSpaces.get(counter);
+			g2.fillRect(current.getX()*pixelConstant, current.getY()*pixelConstant, pixelConstant, pixelConstant);
+		}
+
+		bufferGraphics.setColor(Color.orange);
+
+		for (AllMonsters current : getMonsters()){
+			GridSpace position=current.getOccupiedSpot();
+			if (current.getClass().equals(FollowMonster.class)){
+				g2.setColor(Color.red);
+			}else
+				g2.setColor(Color.orange);
+			g2.fillRect(position.getX()*pixelConstant, position.getY()*pixelConstant, pixelConstant, pixelConstant);
+		}
+
+
+//		for (int counter=0;counter<gridWidth();counter++){
+//		bufferGraphics.setColor(Color.black);
+//		g2.drawLine(counter*pixelConstant, 0, counter*pixelConstant, gridHeight()*pixelConstant);
+//		bufferGraphics.setColor(Color.red);
+//		g2.drawString(counter + "", counter*pixelConstant, 10);
+//	}
+//	for (int counter=0;counter<gridHeight();counter++){
+//		bufferGraphics.setColor(Color.black);
+//		g2.drawLine(0,counter*pixelConstant,gridWidth()*pixelConstant,counter*pixelConstant);
+//		bufferGraphics.setColor(Color.red);
+//		g2.drawString(counter + "",0,counter*pixelConstant+10);
+//	}
+
+		setSize(gridWidth()*pixelConstant,gridHeight()*pixelConstant);
+
+
+
+		if (dark()){
+			Point2D center = new Point2D.Float((player.getOccupiedSpot().getX()*pixelConstant+5), (player.getOccupiedSpot().getY()*pixelConstant+5));
+			float radius = light();
+			float[] dist = {0.1f, 0.3f, 1.0f};
+			Color[] colors = {new Color(0,0,0,0), new Color(0,0,0,0), Color.black};
+			RadialGradientPaint p =new RadialGradientPaint(center, radius, dist, colors);
+
+			g2.setPaint(p);
+			g2.fillRect(0, 0, gridWidth()*pixelConstant, gridHeight()*pixelConstant);
+		}
+
+		g2.setColor(Color.cyan);
+		g2.fillOval(player.getOccupiedSpot().getX()*pixelConstant,player.getOccupiedSpot().getY()*pixelConstant,pixelConstant,pixelConstant);
+
+		g.drawImage(offscreen,0,0,this); 
+	}
+	public void setFailed(boolean newFail){
+		failed=newFail;
+	}
+	class TimerListener implements ActionListener{
+		public void actionPerformed(ActionEvent e){
+			for (AllMonsters current : getMonsters()){
+				current.move();
+				if (current.getOccupiedSpot()==player.getOccupiedSpot()&&!failed){
+					failed=true;
+					timeTracker.refreshTimer();
+					setPlates();
+					game.failedMaze();
+				}
+			}
+			for (SlidingPlate current : getSlidingPlates()){
+				if (!platesRandom()||(int)(Math.random()*10)<5)
+					current.move();
+				for (int counter=0;counter<current.getSpacesCovered().length;counter++){
+					if (current.getSpacesCovered()[counter]==player.getOccupiedSpot()){
+						failed=true;
+						timeTracker.refreshTimer();
+						setPlates();
+						game.failedMaze();
+					}
+				}
+			}
+
+			//testing
+			repaint();
+		}
+	}
+
+
+}
+
+

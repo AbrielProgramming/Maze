@@ -223,13 +223,13 @@ public class DisplayGame {
 		//System.out.println(player.getName());
 		return player;
 	}
-	public void failedMaze(){
+	public void failedMaze(String killedBy){
 		currentMaze.setPlayer(player);
 		currentMaze.refreshTimer();
 		currentMaze.pauseTimer();
 		currentMaze.setFailed(false);
 		alreadyStarted=false;
-		JOptionPane.showMessageDialog(null, "Sorry! You lost!", "Game Failed", JOptionPane.INFORMATION_MESSAGE);
+		JOptionPane.showMessageDialog(null, "Sorry! You lost!\nYou were killed by a " + killedBy + ".", "Game Failed", JOptionPane.INFORMATION_MESSAGE);
 	}
 	private void setBestTimes(boolean onBonus){
 		bestTimes=new JPanel();

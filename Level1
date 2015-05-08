@@ -18,6 +18,9 @@ public class Level1 extends Maze{
 	public boolean dark(){
 		return false;
 	}
+	public boolean monstersRandom(){
+		return false;
+	}
 	public void setPlates(){
 		
 		plates=new ArrayList<Plate>();

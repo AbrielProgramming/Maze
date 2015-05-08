@@ -1,4 +1,3 @@
-
 public class SlidingPlate extends Plate {
 	private int maxExtension;
 	private int movementStep;
@@ -104,7 +103,8 @@ public class SlidingPlate extends Plate {
 							space.editOccupiedBy(null);
 						}
 					}
-					editCovered(super.xStart()+1+movementStep+1, super.yStart());
+					editCovered(super.xStart()+movementStep+1, super.yStart());
+					//subtract!!
 
 				}
 			} else if (super.orientation().equals("horizontal")) {
@@ -234,7 +234,7 @@ public class SlidingPlate extends Plate {
 			movementStep--;
 		}
 
-		if (movementStep==maxExtension) {
+		if (movementStep==maxExtension+1) {
 			movementDirection=false;
 			movementStep--;
 			
@@ -253,3 +253,4 @@ public class SlidingPlate extends Plate {
 
 
 }
+

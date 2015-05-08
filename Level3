@@ -16,7 +16,7 @@ public class Level3 extends Maze{
 		return plates;
 	}
 	public boolean dark(){
-		return true;
+		return false;
 	}
 	public boolean monstersRandom(){
 		return false;
@@ -112,7 +112,7 @@ public class Level3 extends Maze{
 		return 30;
 	}
 	public String getLevel(){
-		return "Level 1";
+		return "Level 3";
 	}
 	public void addPlayer(Player toAdd){
 		toAdd.changeOccupiedSpot(super.getGrid().getGridSpace(0,0));

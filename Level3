@@ -1,21 +1,13 @@
+import java.awt.*;
 import java.util.ArrayList;
 
 
-public class Level3 extends Maze {
-	private ArrayList<Plate> plates=new ArrayList();
+public class Level3 extends Maze{
+	private ArrayList<Plate> plates;
 	private ArrayList<SlidingPlate> slidingPlates;
 	private ArrayList<AllMonsters> monsters;
 	public Level3(DisplayGame game){
 		super(game);
-	}
-	public boolean dark(){
-		return false;
-	}
-	public ArrayList<AllMonsters> getMonsters(){
-		return monsters;
-	}
-	public boolean platesRandom(){
-		return false;
 	}
 	public ArrayList<SlidingPlate> getSlidingPlates(){
 		return slidingPlates;
@@ -23,16 +15,107 @@ public class Level3 extends Maze {
 	public ArrayList<Plate> getPlates(){
 		return plates;
 	}
-	public GridSpace gameCompleteSpace(){
-		return super.getGrid().getGridSpace(4, 4);
+	public boolean dark(){
+		return false;
+	}
+	public boolean monstersRandom(){
+		return false;
 	}
 	public void setPlates(){
+		
 		plates=new ArrayList<Plate>();
 		slidingPlates=new ArrayList<SlidingPlate>();
 		monsters=new ArrayList<AllMonsters>();
-		FollowMonster newMon2=new FollowMonster(super.getGrid(), super.getGrid().getGridSpace(5, 0), super.getGame().getPlayer());
-		super.getGrid().addMonster(newMon2);
-		monsters.add(newMon2);
+		
+//		char[] monsterDirection={'r','l'};
+//		Monster newMonster=new Monster(super.getGrid(),super.getGrid().getGridSpace(28, 16),monsterDirection);
+//		super.getGrid().addMonster(newMonster);
+//		monsters.add(newMonster);
+		//System.out.println(super.getPlayer().getName());
+		
+		
+		
+		plates.add(new Plate(super.getGrid(),1,1,28,"horizontal"));
+		plates.add(new Plate(super.getGrid(),28,1,28,"vertical"));
+		plates.add(new Plate(super.getGrid(),1,3,25,"vertical"));
+		plates.add(new Plate(super.getGrid(),1,28,28,"horizontal"));
+		plates.add(new Plate(super.getGrid(),2,3,25,"horizontal"));
+		plates.add(new Plate(super.getGrid(),26,3,24,"vertical"));
+		plates.add(new Plate(super.getGrid(),3,26,23,"horizontal"));
+//		
+		plates.add(new Plate(super.getGrid(),3,5,22,"vertical"));
+		plates.add(new Plate(super.getGrid(),4,5,21,"horizontal"));
+		plates.add(new Plate(super.getGrid(),24,6,19,"vertical"));
+		plates.add(new Plate(super.getGrid(),5,24,19,"horizontal"));
+		plates.add(new Plate(super.getGrid(),5,7,17,"vertical"));
+		plates.add(new Plate(super.getGrid(),6,7,16,"horizontal"));
+		plates.add(new Plate(super.getGrid(),22,7,16,"vertical"));
+		plates.add(new Plate(super.getGrid(),7,22,15,"horizontal"));
+//		
+		plates.add(new Plate(super.getGrid(),7,9,14,"vertical"));
+		plates.add(new Plate(super.getGrid(),8,9,13,"horizontal"));
+		plates.add(new Plate(super.getGrid(),20,10,11,"vertical"));
+		plates.add(new Plate(super.getGrid(),9,20,11,"horizontal"));
+		plates.add(new Plate(super.getGrid(),9,11,10,"vertical"));
+		plates.add(new Plate(super.getGrid(),10,11,9,"horizontal"));
+//		plates.add(new Plate(super.getGrid(),16,2,11,"vertical"));
+//		plates.add(new Plate(super.getGrid(),14,13,3,"horizontal"));
+//		plates.add(new Plate(super.getGrid(),14,10,3,"vertical"));
+//		plates.add(new Plate(super.getGrid(),14,2,6,"vertical"));
+//		plates.add(new Plate(super.getGrid(),6,8,5,"vertical"));
+//		plates.add(new Plate(super.getGrid(),6,14,9,"vertical"));
+//		plates.add(new Plate(super.getGrid(),23,11,2,"vertical"));
+//		plates.add(new Plate(super.getGrid(),21,11,4,"vertical"));
+//		plates.add(new Plate(super.getGrid(),22,14,3,"horizontal"));
+//		plates.add(new Plate(super.getGrid(),7,16,15,"horizontal"));
+//		plates.add(new Plate(super.getGrid(),11,17,10,"vertical"));
+//		plates.add(new Plate(super.getGrid(),8,8,8,"vertical"));
+//		plates.add(new Plate(super.getGrid(),9,28,20,"horizontal"));
+//		plates.add(new Plate(super.getGrid(),8,25,4,"vertical"));
+//		plates.add(new Plate(super.getGrid(),6,26,4,"vertical"));
+//		plates.add(new Plate(super.getGrid(),21,26,9,"horizontal"));
+//		plates.add(new Plate(super.getGrid(),20,20,9,"vertical"));
+//		plates.add(new Plate(super.getGrid(),21,24,3,"horizontal"));
+//		plates.add(new Plate(super.getGrid(),21,22,3,"horizontal"));
+//		plates.add(new Plate(super.getGrid(),21,20,3,"horizontal"));
+//		plates.add(new Plate(super.getGrid(),13,19,9,"vertical"));
+//		plates.add(new Plate(super.getGrid(),15,17,9,"vertical"));
+//		plates.add(new Plate(super.getGrid(),6,14,9,"vertical"));
+//		plates.add(new Plate(super.getGrid(),6,14,9,"vertical"));
+//		plates.add(new Plate(super.getGrid(),6,14,9,"vertical"));
+
+//		SlidingPlate s1=new SlidingPlate(super.getGrid(),9,1,3,"horizontal",3,"horizontal");
+//		plates.add(s1);
+//		slidingPlates.add(s1);
+//		
+//		SlidingPlate s2=new SlidingPlate(super.getGrid(),0,22,2,"horizontal",2,"vertical");
+//		plates.add(s2);
+//		slidingPlates.add(s2);
+//		
+//		SlidingPlate s3=new SlidingPlate(super.getGrid(),17,2,7,"horizontal",2,"horizontal");
+//		plates.add(s3);
+//		slidingPlates.add(s3);
+//		
+//		SlidingPlate s4=new SlidingPlate(super.getGrid(),18,3,6,"vertical",1,"vertical");
+//		plates.add(s4);
+//		slidingPlates.add(s4);
+//		
+//		
+//		SlidingPlate newPlate=new SlidingPlate(super.getGrid(),10,8,4,"horizontal",2,"vertical");
+//		plates.add(newPlate);
+//		slidingPlates.add(newPlate);
+		
+		
+		for (Plate plate : plates){
+			super.getGrid().addPlate(plate);
+		}
+	}
+	public boolean platesRandom(){
+		return false;
+	}
+	public ArrayList<AllMonsters> getMonsters(){
+		
+		return monsters;
 	}
 	public int gridWidth(){
 		return 30;
@@ -41,17 +124,18 @@ public class Level3 extends Maze {
 		return 30;
 	}
 	public String getLevel(){
-		return "Level 3";
+		return "Level 1";
 	}
 	public void addPlayer(Player toAdd){
-		toAdd.changeOccupiedSpot(new GridSpace(0,0));
+		toAdd.changeOccupiedSpot(super.getGrid().getGridSpace(0,0));
 	}
 	public GridSpace playerStart(){
-		return new GridSpace(0,0);
+		return super.getGrid().getGridSpace(0,0);
 	}
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
+	public GridSpace gameCompleteSpace(){
+		return super.getGrid().getGridSpace(15, 14);
+	}
 
-	}
 
 }
+
